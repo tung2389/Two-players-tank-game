@@ -6,7 +6,7 @@ const server = app.listen(process.env.PORT || 3001,function(){
 const io = require('socket.io')(server);
 
 const HandleMatching = require('./controller/HandleMatching');
-const HandleMoving = require('./controller/HandleMoving');
+const HandleControlling = require('./controller/HandleControlling');
 const HandleExiting = require('./controller/HandleExiting');
 
 let queue = [];
@@ -22,7 +22,7 @@ io.on('connection', function(socket) {
 
     socket.on("Find player", (data) => HandleMatching(queue,rooms,names,socket,data));
   
-    socket.on("Move", (data) => HandleMoving(socket,rooms,data));
+    socket.on("Control", (data) => HandleControlling(socket,rooms,data));
 
     socket.on('Disconnect', () => HandleExiting(socket, rooms));
 
