@@ -1,14 +1,13 @@
-var tank, canvas;
+var player, canvas, globalHandler;
 
 function setup() {
-    tank = new Tank(
+    player = new Tank(
         600, // x
         400, // y
         60,  // Radius
-        4,   // Speed
         6,   // Maximum speed
         6,   // Accelerating speed
-        6,   // Turning speed
+        PI / 60,   // Turning speed
         'red'// Color
     );
 
@@ -17,12 +16,15 @@ function setup() {
         600   // Height
     );
 
+    globalHandler = new GlobalHandler();
+
     createCanvas(canvas.width, canvas.height);
 }
 
 function draw() {
     push();
     background(0, 0, 0);
-    tank.draw();
+    player.draw();
+    globalHandler.draw()
     pop();
 }
