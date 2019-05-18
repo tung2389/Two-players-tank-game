@@ -10,6 +10,18 @@ class GlobalHandler {
         if(keyIsDown(RIGHT_ARROW)) {
             player.turn('RIGHT');
         }
+        if(keyIsDown(UP_ARROW)) {
+            player.accelerate('FORWARD');
+        }
+        // else {
+        //     player.decelerate();
+        // }
+        if(keyIsDown(DOWN_ARROW)) {
+            player.accelerate('BACKWARD');
+        }
+        // else {
+        //     player.decelerate();
+        // }
     }
 
     draw() {

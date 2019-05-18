@@ -1,24 +1,47 @@
 class Tank  {
-    constructor(x, y, radius, maxSpeed, acceleratingSpeed, turnSpeed, color) {
+    constructor(x, y, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color) {
         this.pos = createVector(x, y);
         this.currentSpeed = createVector(0, 0);
         this.radius = radius;
         this.maxSpeed = maxSpeed;
         this.acceleratingSpeed = acceleratingSpeed;
+        this.deceleratingSpeed = deceleratingSpeed;
         this.turnSpeed = turnSpeed;
         this.color = color;
-        this.angle = 2*PI;
+        this.angle = 0;
     }
 
     turn(direction) {
         this.angle += direction === 'LEFT' ? -this.turnSpeed : this.turnSpeed;
     }
     
-    accelerate() {
-        let currentAngle = p5.Vector.fromAngle(this.angle); // Create a vector with the length equals to 1 from angle
-        this.currentSpeed.x += currentAngle.x * this.acceleratingSpeed;
-        this.currentSpeed.y += currentAngle.y * this.acceleratingSpeed;
+    accelerate(direction) {
+        // Create a vector of direction with the length equals to 1 from angle, +PI because the gap between the initial 
+        // angle and the 0 angle is PI.
+        let currentAngle = p5.Vector.fromAngle(this.angle + PI);
+        let accelerateX = currentAngle.x * this.acceleratingSpeed;
+        let accelerateY = currentAngle.y * this.acceleratingSpeed;
+        this.currentSpeed.x += direction === 'FORWARD' ? accelerateX : -accelerateX;
+        this.currentSpeed.y += direction === 'FORWARD' ? accelerateY : -accelerateY;
         this.constrainSpeed();
+    }
+
+    // Decide whether the player can still decelerate
+    handleDecelerating(currentSpeed, deceleratingSpeed) {
+        if(Math.abs(currentSpeed) < Math.abs(deceleratingSpeed)) {
+            return 0;
+        }
+        else {
+            return currentSpeed - deceleratingSpeed;
+        }
+    }
+
+    decelerate() {
+        if( this.currentSpeed.x !== 0 && this.currentSpeed.y !== 0) {
+            let currentAngle = p5.Vector.fromAngle(this.angle + PI);
+            this.currentSpeed.x = this.handleDecelerating(this.currentSpeed.x, currentAngle.x * this.deceleratingSpeed);
+            this.currentSpeed.y = this.handleDecelerating(this.currentSpeed.y, currentAngle.y * this.deceleratingSpeed);
+        }
     }
 
     constrainSpeed() {
@@ -30,17 +53,29 @@ class Tank  {
         }
     }
 
+    // Handle collision of the tank with the x-axis or the y-axis
+    handleCollisionWithAxis(pos, radius, limit, axis) {
+        if(pos + radius > limit) {
+            this.currentSpeed[axis] = 0;
+            return limit - radius; 
+        }
+        else if(pos - radius < 0) {
+            this.currentSpeed[axis] = 0;
+            return radius;
+        }
+        else {
+            return pos;
+        }
+    }
 
     handleX() {
         this.pos.x += this.currentSpeed.x;
-        this.pos.x = this.pos.x > canvas.width ? canvas.width : this.pos.x;
-        this.pos.x = this.pos.x < 0 ? 0 : this.pos.x;
+        this.pos.x = this.handleCollisionWithAxis(this.pos.x, this.radius, canvas.width, 'x');
     }
 
     handleY() {
         this.pos.y += this.currentSpeed.y;
-        this.pos.y = this.pos.y > canvas.height ? canvas.height : this.pos.y;
-        this.pos.y = this.pos.y < 0 ? 0 : this.pos.y;
+        this.pos.y = this.handleCollisionWithAxis(this.pos.y, this.radius, canvas.height, 'y');
     }
 
     handleMovement() {
@@ -50,7 +85,7 @@ class Tank  {
 
 
     drawCircle() {
-        circle(0, 0, this.radius);
+        circle(0, 0, this.radius * 2);
     }
 
     drawArrow() {

@@ -4,9 +4,10 @@ function setup() {
     player = new Tank(
         600, // x
         400, // y
-        60,  // Radius
+        30,  // Radius
         6,   // Maximum speed
-        6,   // Accelerating speed
+        0.5,   // Accelerating speed
+        0.5,   // Decelerating speed
         PI / 60,   // Turning speed
         'red'// Color
     );
