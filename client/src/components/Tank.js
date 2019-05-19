@@ -26,9 +26,17 @@ class Tank  {
         this.constrainSpeed();
     }
 
+    deceleratingSpeedExceedCurrentSpeed(currentSpeed, deceleratingSpeed) {
+        if( (currentSpeed - deceleratingSpeed) * currentSpeed <= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     // Decide whether the player can still decelerate
     handleDecelerating(currentSpeed, deceleratingSpeed) {
-        if(Math.abs(currentSpeed) <= Math.abs(deceleratingSpeed)) {
+        if(this.deceleratingSpeedExceedCurrentSpeed(currentSpeed, deceleratingSpeed)) {
             return 0;
         }
         else {
@@ -36,22 +44,19 @@ class Tank  {
         }
     }
 
-    handleDeceleratingSpeedXY (direction, currentAngle) {
-        if(direction === 'FORWARD') {
+    handleDeceleratingSpeedXY (currentAngle) {
             this.currentSpeed.x = this.handleDecelerating(this.currentSpeed.x, currentAngle.x * this.deceleratingSpeed);
             this.currentSpeed.y = this.handleDecelerating(this.currentSpeed.y, currentAngle.y * this.deceleratingSpeed);
-        }
-        else {
-            this.currentSpeed.x = this.handleDecelerating(this.currentSpeed.x, -currentAngle.x * this.deceleratingSpeed);
-            this.currentSpeed.y = this.handleDecelerating(this.currentSpeed.y, -currentAngle.y * this.deceleratingSpeed);
-        }
+    }
+    
+    createDirectionOfCurrentMovement () {
+        return createVector(this.currentSpeed.x, this.currentSpeed.y).normalize();
     }
 
-    decelerate(direction, angle) {
+    decelerate() {
         if( this.currentSpeed.x !== 0 || this.currentSpeed.y !== 0) {
-            let currentAngle = p5.Vector.fromAngle(angle + PI);
-            console.log(this.currentSpeed.x, this.currentSpeed.y, currentAngle.x, currentAngle.y);
-            this.handleDeceleratingSpeedXY(direction, currentAngle);
+            let currentAngleMovement = this.createDirectionOfCurrentMovement();
+            this.handleDeceleratingSpeedXY(currentAngleMovement);
         }
     }
 

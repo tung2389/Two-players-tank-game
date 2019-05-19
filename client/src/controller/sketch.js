@@ -7,7 +7,7 @@ function setup() {
         30,  // Radius
         6,   // Maximum speed
         0.2,   // Accelerating speed
-        0.5,   // Decelerating speed
+        0.2,   // Decelerating speed
         PI / 60,   // Turning speed
         'red'// Color
     );
