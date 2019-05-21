@@ -16,15 +16,24 @@ class BulletHandler {
         this.bulletList.splice(pos, 1);
     }
 
+    isBulletCollideWithAxis(bulletPos) {
+        if( bulletPos.x < 0 ||
+            bulletPos.y < 0 ||
+            bulletPos.x > canvas.width ||
+            bulletPos.y > canvas.height
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     draw() {
         let i = 0;
         while(i < this.bulletList.length) {
             let bulletPos = this.bulletList[i].pos;
-            if( bulletPos.x < 0 ||
-                bulletPos.y < 0 ||
-                bulletPos.x > canvas.width ||
-                bulletPos.y > canvas.height
-            ) {
+            if(this.isBulletCollideWithAxis(bulletPos)) {
                 this.removeBullet(i);
             }
             else {
