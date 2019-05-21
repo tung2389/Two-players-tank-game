@@ -26,31 +26,13 @@ class Tank  {
         this.constrainSpeed();
     }
 
-    deceleratingSpeedExceedCurrentSpeed(currentSpeed, deceleratingSpeed) {
-        if( (currentSpeed - deceleratingSpeed) * currentSpeed <= 0) {
-            return true;
+    constrainSpeed() {
+        if(this.currentSpeed.mag() > this.maxSpeed) {
+            let currentVector = this.currentSpeed;
+            currentVector.normalize(); // vector's length equal to 1 without changing the ratio between x and y
+            this.currentSpeed.x = currentVector.x * this.maxSpeed;
+            this.currentSpeed.y = currentVector.y * this.maxSpeed;
         }
-        else {
-            return false;
-        }
-    }
-    // Decide whether the player can still decelerate
-    handleDecelerating(currentSpeed, deceleratingSpeed) {
-        if(this.deceleratingSpeedExceedCurrentSpeed(currentSpeed, deceleratingSpeed)) {
-            return 0;
-        }
-        else {
-            return currentSpeed - deceleratingSpeed;
-        }
-    }
-
-    handleDeceleratingSpeedXY (currentAngle) {
-            this.currentSpeed.x = this.handleDecelerating(this.currentSpeed.x, currentAngle.x * this.deceleratingSpeed);
-            this.currentSpeed.y = this.handleDecelerating(this.currentSpeed.y, currentAngle.y * this.deceleratingSpeed);
-    }
-    
-    createDirectionOfCurrentMovement () {
-        return createVector(this.currentSpeed.x, this.currentSpeed.y).normalize();
     }
 
     decelerate() {
@@ -60,12 +42,31 @@ class Tank  {
         }
     }
 
-    constrainSpeed() {
-        if(this.currentSpeed.mag() > this.maxSpeed) {
-            let currentVector = this.currentSpeed;
-            currentVector.normalize(); // vector's length equal to 1 without changing the ratio between x and y
-            this.currentSpeed.x = currentVector.x * this.maxSpeed;
-            this.currentSpeed.y = currentVector.y * this.maxSpeed;
+    createDirectionOfCurrentMovement () {
+        return createVector(this.currentSpeed.x, this.currentSpeed.y).normalize();
+    }
+
+    handleDeceleratingSpeedXY (currentAngle) {
+        this.currentSpeed.x = this.caculateSpeedAfterDecelerating(this.currentSpeed.x, currentAngle.x * this.deceleratingSpeed);
+        this.currentSpeed.y = this.caculateSpeedAfterDecelerating(this.currentSpeed.y, currentAngle.y * this.deceleratingSpeed);
+    }
+
+    caculateSpeedAfterDecelerating(currentSpeed, deceleratingSpeed) {
+        if(this.deceleratingSpeedExceedCurrentSpeed(currentSpeed, deceleratingSpeed)) {
+            return 0;
+        }
+        else {
+            return currentSpeed - deceleratingSpeed;
+        }
+    }
+
+    // Decide whether the player can still decelerate
+    deceleratingSpeedExceedCurrentSpeed(currentSpeed, deceleratingSpeed) {
+        if( (currentSpeed - deceleratingSpeed) * currentSpeed <= 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
