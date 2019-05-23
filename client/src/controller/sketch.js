@@ -1,6 +1,6 @@
 var player, canvas, globalHandler, bulletHandler;
 
-function setup() {
+function startGame() {
     player = new Tank(
         600, // x
         400, // y
@@ -21,6 +21,12 @@ function setup() {
     globalHandler = new GlobalHandler();
 
     createCanvas(canvas.width, canvas.height);
+};
+
+function setup() {
+    socket.on("Starting battle", function(msg) {
+        startGame();
+    });
 }
 
 function draw() {
