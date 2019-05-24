@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Please wait</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src='../../src/socketController/socketGlobalHandler.js'></script>
 </head>
 <body>
     <h1 align = "center">Please wait, we are searching for your opponent</h1>
+    <script>
+        socketGlobalHandler.setupListeningAndHandling();
+    </script>
 </body>
 </html>

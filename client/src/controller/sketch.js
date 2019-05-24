@@ -24,7 +24,7 @@ function startGame() {
 };
 
 function setup() {
-    socket.on("Starting battle", function(msg) {
+    socket.on("Starting battle", function(data) {
         startGame();
     });
 }

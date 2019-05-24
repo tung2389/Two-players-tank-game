@@ -9,6 +9,10 @@ const handleMatching = require('./controller/handleMatching');
 const handleControlling = require('./controller/handleControlling');
 const handleExiting = require('./controller/handleExiting');
 
+const gettingStartedPage = require('./routes/starting');
+const waitingPage = require('./routes/waiting');
+const gamePage = require('./routes/tank.io');
+
 let queue = [];
 let rooms = [];
 let names = [];
