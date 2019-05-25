@@ -21,8 +21,14 @@ app.get('/', (req,res) => {
     res.send("Hello. This is tank.io - two players game");
 });
 
+app.use('/',express.static(__dirname + '/client'));
+
+app.use('/gettingstarted', gettingStartedPage);
+app.use('/waiting', waitingPage);
+app.use('/play', gamePage);
+
 io.on('connection', function(socket) {
-    console.log('User with id ' + socket.io + 'connected');
+    console.log('User with id ' + socket.io + ' connected');
 
     socket.on("Find player", (data) => handleMatching(queue,rooms,names,socket,data));
   

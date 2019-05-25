@@ -1,8 +1,8 @@
 var socket = io();
-var socketGlobalHandler = new SocetGlobalHandler();
+var socketGlobalHandler;
 
 function redirectTo(url) {
-    window.location(url);
+    window.location.href = url;
 }
 
 function isPlayerNameValid(playerName) {
@@ -33,8 +33,8 @@ class SocetGlobalHandler {
     }
     
     setupListeningAndHandling() {
-        socket.on('Please wait', redirectTo('/waiting'));
-        socket.on('Starting battle', redirectTo('/play'));
+        socket.on('Please wait', () => redirectTo('/waiting'));
+        socket.on('Starting battle', () => redirectTo('/play'));
     }
 
     findPlayer() {
@@ -47,3 +47,5 @@ class SocetGlobalHandler {
         }
     }
 }
+
+socketGlobalHandler = new SocetGlobalHandler();

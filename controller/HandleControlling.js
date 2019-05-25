@@ -1,6 +1,6 @@
-function HandleControlling(player, rooms, data) {
+function handleControlling(player, rooms, data) {
     let roomName = rooms[player.id];
     player.broadcast.to(roomName).emit("Control", data);
 }
 
-module.exports = HandleControlling;
+module.exports = handleControlling;
