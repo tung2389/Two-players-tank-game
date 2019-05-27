@@ -7,12 +7,6 @@ async function changeDomContentTo(url) {
     rewriteHTMLFile(htmlContent);
 }
 
-function rewriteHTMLFile(htmlContent) {
-    document.open();
-    document.write(htmlContent);
-    document.close();
-}
-
 async function getHTMLContent(url) {
     let responseObject = await fetch(url, {
         headers: {
@@ -21,6 +15,12 @@ async function getHTMLContent(url) {
     });
     let htmlContent = await responseObject.text();
     return htmlContent;
+}
+
+function rewriteHTMLFile(htmlContent) {
+    document.open();
+    document.write(htmlContent);
+    document.close();
 }
 
 function isPlayerNameValid(playerName) {
@@ -33,21 +33,42 @@ function isPlayerNameValid(playerName) {
 function getUserName() {
     return document.getElementById('name').value;
 }
+
 class SocetGlobalHandler {
     constructor() {
 
     }
 
-    move() {
-
+    sendAcceleratingAction(direction) {
+        socket.emit('Control', {
+            type: 'Accelerate',
+            direction: direction
+        });
     }
 
-    changeDirection() {
-
+    sendDeceleratingAction() {
+        socket.emit('Control', {
+            type: 'Decelerate',
+        });
+    }
+    
+    sendStoppingDeceleratingAction() {
+        socket.emit('Control', {
+            type: 'Stop decelerating',
+        });
     }
 
-    shoot() {
-        
+    sendTurningAction(direction) {
+        socket.emit('Control', {
+            type: 'Turn',
+            direction: direction
+        });
+    }
+
+    sendShootingAction() {
+        socket.emit('Control', {
+            type: 'Shoot'
+        })
     }
     
     setupListeningAndHandling() {
@@ -64,7 +85,31 @@ class SocetGlobalHandler {
             socket.emit('Find player',{name:playerName});
         }
         else {
-            alert("Username cannot be empty");
+            alert('Username cannot be empty');
+        }
+    }
+
+    listenForControllingAction() {
+        socket.on('Control', (action) => {
+            this.handleControllingActionReceived(action);
+        })
+    }
+
+    handleControllingActionReceived(action) {
+        if(action.type === 'Turn') {
+            opponent.turn(action.direction);
+        }
+        if(action.type === 'Shoot') {
+            opponentBulletHandler.createBullet();
+        }
+        if(action.type === 'Accelerate') {
+            opponent.accelerate(action.direction);
+        }
+        if(action.type === 'Decelerate') {
+            playerGlobalHandler.opponentTankDecelerate();
+        }
+        if(action.type === 'Stop decelerating') {
+            playerGlobalHandler.opponentTankStopDecelerating();
         }
     }
 }

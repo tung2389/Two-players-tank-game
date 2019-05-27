@@ -1,13 +1,15 @@
 class BulletHandler {
-    constructor() {
+    constructor(tank) {
+        this.tank = tank;
         this.bulletList = [];
     }
 
     createBullet() {
         this.bulletList.push(new Bullet(
+            this.tank,
             10, // Speed
             10,  // Radius
-            player.color
+            this.tank.color
         ));
     }
 

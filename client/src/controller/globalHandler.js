@@ -1,42 +1,57 @@
 const ENTER_KEY = 13;
 
 class GlobalHandler {
-    constructor() {
+    constructor(tank) {
+        this.tank = tank;
         this.fireButtonPressed = false;
-        this.decelerate = false;
+        this.playerDecelerate = false;
+        this.opponentDecelerate = false;
     }
 
     hanldeKeyTurn() {
+        let direction = undefined;
         if(keyIsDown(LEFT_ARROW)) {
-            player.turn('LEFT');
+            direction = 'LEFT';
         }
         if(keyIsDown(RIGHT_ARROW)) {
-            player.turn('RIGHT');
+            direction = 'RIGHT';
         }   
+        if(direction !== undefined) {
+        player.turn(direction);
+        socketGlobalHandler.sendTurningAction(direction);
+        }
     }
 
     handleKeyDecelerate() {
         if(keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) {
-            this.decelerate = false;
+            this.playerDecelerate = false;
+            socketGlobalHandler.sendStoppingDeceleratingAction();
         }
-        else {
-            this.decelerate = true;
+        else if(this.playerDecelerate === false){
+            this.playerDecelerate = true;
+            socketGlobalHandler.sendDeceleratingAction();
         }
     }
 
     handleKeyAccelerate() {
+        let direction = undefined;
         if(keyIsDown(UP_ARROW)) {
-            player.accelerate('FORWARD');
+            direction = 'FORWARD';
         }
         if(keyIsDown(DOWN_ARROW)) {
-            player.accelerate('BACKWARD');
+            direction = 'BACKWARD';
+        }
+        if(direction !== undefined) {
+        player.accelerate(direction);
+        socketGlobalHandler.sendAcceleratingAction(direction);
         }
     }
 
     handleKeyFire() {
         if(keyIsDown(ENTER_KEY)) {
             if(!this.fireButtonPressed) {
-                bulletHandler.createBullet();
+                playerBulletHandler.createBullet();
+                socketGlobalHandler.sendShootingAction();
             }
             this.fireButtonPressed = true;
         }
@@ -52,10 +67,21 @@ class GlobalHandler {
         this.handleKeyFire();
     }
 
+    opponentTankDecelerate() {
+        this.opponentDecelerate = true;
+    }
+
+    opponentTankStopDecelerating() {
+        this.opponentDecelerate = false;
+    }
+
     draw() {
         this.handleKeyPress();
-        if(this.decelerate === true) {
+        if(this.playerDecelerate === true) {
             player.decelerate();
+        }
+        if(this.opponentDecelerate === true) {
+            opponent.decelerate();
         }
     }
 }

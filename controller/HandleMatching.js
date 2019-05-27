@@ -40,8 +40,16 @@ function saveRoom(player, opponent, rooms, roomName) {
 
 //Send needed information to each client
 function sendPlayersInfo(player, opponent, roomName, names) {
-    player.emit('Starting battle', {'name': names[opponent.id], 'room': roomName, 'number': 1});
-    opponent.emit('Starting battle', {'name': names[player.id], 'room': roomName, 'number': 0});
+    player.emit('Starting battle', {
+        'opponentName': names[opponent.id], 
+        'room': roomName, 
+        'number': 1
+    });
+    opponent.emit('Starting battle', {
+        'opponentName': names[player.id], 
+        'room': roomName, 
+        'number': 0
+    });
 }
 
 

@@ -1,4 +1,4 @@
-var player,opponent, canvas, globalHandler, bulletHandler;
+var player,opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler;
 
 function setup() {
     createAllObjects(playerData);
@@ -27,7 +27,8 @@ function createAllObjects(data) {
         0.2,   // Accelerating speed
         0.2,   // Decelerating speed
         PI / 60,   // Turning speed
-        propertyOfPlayer.color // Color of the tank
+        propertyOfPlayer.color, // Color of the tank,
+        typeOfPlayer // The type of the player, for example: player 1 has type 0, player 2 has type 1
     );
     
     opponent = new Tank(
@@ -39,11 +40,14 @@ function createAllObjects(data) {
         0.2,
         0.2,
         PI / 60,
-        propertyOfOpponent.color
+        propertyOfOpponent.color,
+        1 - typeOfPlayer
     );
 
-    bulletHandler = new BulletHandler();
-    globalHandler = new GlobalHandler();
+    playerBulletHandler = new BulletHandler(player);
+    opponentBulletHandler = new BulletHandler(opponent);
+    playerGlobalHandler = new GlobalHandler(player);
+    opponentGlobalHandler = new GlobalHandler(opponent);
 
     createCanvas(canvas.width, canvas.height);
 };
@@ -75,7 +79,9 @@ function drawAllObjects() {
     background(0, 0, 0);
     player.draw();
     opponent.draw();
-    bulletHandler.draw();
-    globalHandler.draw()
+    playerBulletHandler.draw();
+    opponentBulletHandler.draw();
+    playerGlobalHandler.draw()
+    socketGlobalHandler.listenForControllingAction();
     pop();
 }

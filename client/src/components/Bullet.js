@@ -1,14 +1,15 @@
 
-function returnPosByDirection(direction) {
-    let pos = createVector(player.pos.x + direction.x * player.radius, player.pos.y + direction.y * player.radius);
+function returnPosByDirection(tank, direction) {
+    let pos = createVector(tank.pos.x + direction.x * tank.radius, tank.pos.y + direction.y * tank.radius);
     return pos;
 }
 
 class Bullet {
-    constructor(speed, radius, color) {
+    constructor(tank, speed, radius, color) {
+        this.tank = tank;
         this.speed = speed;
-        this.direction = p5.Vector.fromAngle(player.angle + PI);
-        this.pos = returnPosByDirection(this.direction, player.radius);   
+        this.direction = p5.Vector.fromAngle(tank.angle + PI);
+        this.pos = returnPosByDirection(this.direction, tank.radius);   
         this.radius = radius;
         this.color = color;
     }

@@ -1,5 +1,5 @@
 class Tank  {
-    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color) {
+    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type) {
         this.pos = createVector(x, y);
         this.currentSpeed = createVector(0, 0);
         this.radius = radius;
@@ -9,6 +9,7 @@ class Tank  {
         this.deceleratingSpeed = deceleratingSpeed;
         this.turnSpeed = turnSpeed;
         this.color = color;
+        this.type = type;
     }
 
     turn(direction) {
