@@ -1,8 +1,26 @@
 var socket = io();
 var socketGlobalHandler;
+var playerData;
 
-function redirectTo(url) {
-    window.location.href = url;
+async function changeDomContentTo(url) {
+    let htmlContent = await getHTMLContent(url);
+    rewriteHTMLFile(htmlContent);
+}
+
+function rewriteHTMLFile(htmlContent) {
+    document.open();
+    document.write(htmlContent);
+    document.close();
+}
+
+async function getHTMLContent(url) {
+    let responseObject = await fetch(url, {
+        headers: {
+            'Content-Type':'text/html'
+        }
+    });
+    let htmlContent = await responseObject.text();
+    return htmlContent;
 }
 
 function isPlayerNameValid(playerName) {
@@ -33,8 +51,11 @@ class SocetGlobalHandler {
     }
     
     setupListeningAndHandling() {
-        socket.on('Please wait', () => redirectTo('/waiting'));
-        socket.on('Starting battle', () => redirectTo('/play'));
+        socket.on('Please wait', () => changeDomContentTo('/public/pages/waitingPage.html'));
+        socket.on('Starting battle', (data) => {
+            changeDomContentTo('/public/index.html');
+            playerData = data;
+        });
     }
 
     findPlayer() {

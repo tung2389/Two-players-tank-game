@@ -24,7 +24,7 @@ function match(queue, rooms, names, player) {
 
     joinTwoPlayersIntoOneRoom(player, opponent, roomName);
     saveRoom(player, opponent, rooms, roomName);
-    sendPlayersInfo(player, opponent, roomName, names)
+    sendPlayersInfo(player, opponent, roomName, names);
 }
 
 function joinTwoPlayersIntoOneRoom(player, opponent, roomName) {
@@ -40,8 +40,8 @@ function saveRoom(player, opponent, rooms, roomName) {
 
 //Send needed information to each client
 function sendPlayersInfo(player, opponent, roomName, names) {
-    player.emit('Starting battle', {'name': names[opponent.id], 'room': roomName, 'number': 2});
-    opponent.emit('Starting battle', {'name': names[player.id], 'room': roomName, 'number': 1});
+    player.emit('Starting battle', {'name': names[opponent.id], 'room': roomName, 'number': 1});
+    opponent.emit('Starting battle', {'name': names[player.id], 'room': roomName, 'number': 0});
 }
 
 
