@@ -14,7 +14,6 @@ class BulletHandler {
     }
 
     removeBullet(pos) {
-        console.log(1);
         this.bulletList.splice(pos, 1);
     }
 

@@ -6,10 +6,9 @@ function returnPosByDirection(tank, direction) {
 
 class Bullet {
     constructor(tank, speed, radius, color) {
-        this.tank = tank;
         this.speed = speed;
         this.direction = p5.Vector.fromAngle(tank.angle + PI);
-        this.pos = returnPosByDirection(this.direction, tank.radius);   
+        this.pos = returnPosByDirection(tank, this.direction);   
         this.radius = radius;
         this.color = color;
     }

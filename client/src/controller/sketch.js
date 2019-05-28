@@ -1,6 +1,7 @@
 var player,opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler;
 
 function setup() {
+    setupSocketListeningForAction();
     createAllObjects(playerData);
 }
 
@@ -9,11 +10,20 @@ function draw() {
 }
 
 function createAllObjects(data) {
+    createTheCanvas();
+    createTwoTanks(data);
+    createHandlers();
+};
+
+function createTheCanvas() {
     canvas = new Canvas(
         1300, // Width
         600   // Height
     );
+    createCanvas(canvas.width, canvas.height);
+}
 
+function createTwoTanks(data) {
     let typeOfPlayer = data.number;
     let propertyOfPlayer = getPropertyOfPlayerBasedOnType(typeOfPlayer);
     let propertyOfOpponent = getPropertyOfPlayerBasedOnType(1 - typeOfPlayer);
@@ -43,14 +53,7 @@ function createAllObjects(data) {
         propertyOfOpponent.color,
         1 - typeOfPlayer
     );
-
-    playerBulletHandler = new BulletHandler(player);
-    opponentBulletHandler = new BulletHandler(opponent);
-    playerGlobalHandler = new GlobalHandler(player);
-    opponentGlobalHandler = new GlobalHandler(opponent);
-
-    createCanvas(canvas.width, canvas.height);
-};
+}
 
 function getPropertyOfPlayerBasedOnType(typeOfPlayer) {
     let x, y, angle, color;
@@ -74,6 +77,17 @@ function getPropertyOfPlayerBasedOnType(typeOfPlayer) {
     }
 }
 
+function createHandlers() {
+    playerBulletHandler = new BulletHandler(player);
+    opponentBulletHandler = new BulletHandler(opponent);
+    playerGlobalHandler = new GlobalHandler(player);
+    opponentGlobalHandler = new GlobalHandler(opponent);
+}
+
+function setupSocketListeningForAction() {
+    socketGlobalHandler.listenForControllingAction();
+}
+
 function drawAllObjects() {
     push();
     background(0, 0, 0);
@@ -82,6 +96,5 @@ function drawAllObjects() {
     playerBulletHandler.draw();
     opponentBulletHandler.draw();
     playerGlobalHandler.draw()
-    socketGlobalHandler.listenForControllingAction();
     pop();
 }

@@ -42,8 +42,8 @@ class GlobalHandler {
             direction = 'BACKWARD';
         }
         if(direction !== undefined) {
-        player.accelerate(direction);
-        socketGlobalHandler.sendAcceleratingAction(direction);
+            player.accelerate(direction);
+            socketGlobalHandler.sendAcceleratingAction(direction);
         }
     }
 
@@ -75,13 +75,17 @@ class GlobalHandler {
         this.opponentDecelerate = false;
     }
 
-    draw() {
-        this.handleKeyPress();
+    handleTwoTanksDeceleration() {
         if(this.playerDecelerate === true) {
             player.decelerate();
         }
         if(this.opponentDecelerate === true) {
             opponent.decelerate();
         }
+    }
+    
+    draw() {
+        this.handleTwoTanksDeceleration();
+        this.handleKeyPress();
     }
 }
