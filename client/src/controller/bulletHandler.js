@@ -17,11 +17,11 @@ class BulletHandler {
         this.bulletList.splice(pos, 1);
     }
 
-    isBulletCollideWithAxis(bulletPos) {
-        if( bulletPos.x < 0 ||
-            bulletPos.y < 0 ||
-            bulletPos.x > canvas.width ||
-            bulletPos.y > canvas.height
+    bulletCollideWithAxis(bullet) {
+        if( bullet.pos.x < 0 ||
+            bullet.pos.y < 0 ||
+            bullet.pos.x > canvas.width ||
+            bullet.pos.y > canvas.height
         ) {
             return true;
         }
@@ -30,11 +30,20 @@ class BulletHandler {
         }
     }
     
+    bulletCollideWithOpponentTank(bullet) {
+        if(dist(bullet.pos.x, bullet.pos.y, opponent.pos.x, opponent.pos.y) - opponent.radius - STROKE_WEIGHT - bullet.radius < 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     draw() {
         let i = 0;
         while(i < this.bulletList.length) {
-            let bulletPos = this.bulletList[i].pos;
-            if(this.isBulletCollideWithAxis(bulletPos)) {
+            let bullet = this.bulletList[i];
+            if(this.bulletCollideWithAxis(bullet) || this.bulletCollideWithOpponentTank(bullet)) {
                 this.removeBullet(i);
             }
             else {

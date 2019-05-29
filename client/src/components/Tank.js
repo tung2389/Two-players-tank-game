@@ -1,3 +1,5 @@
+const STROKE_WEIGHT = 4;
+
 class Tank  {
     constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type) {
         this.pos = createVector(x, y);
@@ -73,26 +75,45 @@ class Tank  {
 
     // Handle collision of the tank with the x-axis or the y-axis
     handleCollisionWithAxis(pos, radius, limit, axis) {
-        if(pos + radius > limit) {
+        if(pos + radius + STROKE_WEIGHT > limit) {
             this.currentSpeed[axis] = 0;
-            return limit - radius; 
+            return limit - radius - STROKE_WEIGHT; 
         }
-        else if(pos - radius < 0) {
+        else if(pos - radius - STROKE_WEIGHT < 0) {
             this.currentSpeed[axis] = 0;
-            return radius;
+            return radius + STROKE_WEIGHT;
         }
         else {
             return pos;
         }
     }
+    
+    collideWithOpponentTank(x,y) {
+        if(dist(x, y, opponent.pos.x, opponent.pos.y) - 2 * STROKE_WEIGHT - this.radius - opponent.radius < 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     handleX() {
+        let oldPosX = this.pos.x;
         this.pos.x += this.currentSpeed.x;
+        let newPosX = this.pos.x;
+        if(this.collideWithOpponentTank(oldPosX, this.pos.y) === false && this.collideWithOpponentTank(newPosX, this.pos.y) === true) {
+            this.pos.x = oldPosX;
+        }
         this.pos.x = this.handleCollisionWithAxis(this.pos.x, this.radius, canvas.width, 'x');
     }
 
     handleY() {
+        let oldPosY = this.pos.y;
         this.pos.y += this.currentSpeed.y;
+        let newPosY = this.pos.y;
+        if(this.collideWithOpponentTank(this.pos.x, oldPosY) === false && this.collideWithOpponentTank(this.pos.x, newPosY) === true) {
+            this.pos.y = oldPosY;
+        }
         this.pos.y = this.handleCollisionWithAxis(this.pos.y, this.radius, canvas.height, 'y');
     }
 
@@ -112,7 +133,7 @@ class Tank  {
     }
 
     drawColor() {
-        strokeWeight(4);
+        strokeWeight(STROKE_WEIGHT);
         stroke(this.color);
         fill("black");
     }

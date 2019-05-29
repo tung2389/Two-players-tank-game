@@ -17,8 +17,8 @@ class GlobalHandler {
             direction = 'RIGHT';
         }   
         if(direction !== undefined) {
-        player.turn(direction);
-        socketGlobalHandler.sendTurningAction(direction);
+            player.turn(direction);
+            socketGlobalHandler.sendTurningAction(direction);
         }
     }
 
