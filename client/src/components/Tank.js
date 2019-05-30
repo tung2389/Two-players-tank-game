@@ -1,7 +1,7 @@
 const STROKE_WEIGHT = 4;
 
 class Tank  {
-    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type) {
+    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health) {
         this.pos = createVector(x, y);
         this.currentSpeed = createVector(0, 0);
         this.radius = radius;
@@ -12,6 +12,7 @@ class Tank  {
         this.turnSpeed = turnSpeed;
         this.color = color;
         this.type = type;
+        this.health = health;
     }
 
     turn(direction) {
@@ -122,6 +123,9 @@ class Tank  {
         this.handleY();
     }
 
+    lostHealth(damage) {
+        this.health -= damage;
+    }
 
     drawCircle() {
         circle(0, 0, this.radius * 2);

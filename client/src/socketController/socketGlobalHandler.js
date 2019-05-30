@@ -68,9 +68,15 @@ class SocetGlobalHandler {
     sendShootingAction() {
         socket.emit('Control', {
             type: 'Shoot'
-        })
+        });
     }
     
+    // sendLosingHealthAction() {
+    //     socket.emit('Control', {
+    //         type: 'Lost health'
+    //     });
+    // }
+
     setupListeningAndHandling() {
         socket.on('Please wait', () => changeDomContentTo('/public/pages/waitingPage.html'));
         socket.on('Starting battle', (data) => {

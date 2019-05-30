@@ -1,15 +1,16 @@
 class BulletHandler {
-    constructor(tank) {
-        this.tank = tank;
+    constructor(player, opponent) {
+        this.player = player;
+        this.opponent = opponent;
         this.bulletList = [];
     }
 
     createBullet() {
         this.bulletList.push(new Bullet(
-            this.tank,
+            this.player,
             10, // Speed
             10,  // Radius
-            this.tank.color
+            this.player.color
         ));
     }
 
@@ -29,9 +30,13 @@ class BulletHandler {
             return false;
         }
     }
-    
+
     bulletCollideWithOpponentTank(bullet) {
-        if(dist(bullet.pos.x, bullet.pos.y, opponent.pos.x, opponent.pos.y) - opponent.radius - STROKE_WEIGHT - bullet.radius < 0) {
+        if(dist(bullet.pos.x, bullet.pos.y, this.opponent.pos.x, this.opponent.pos.y) 
+            - this.opponent.radius 
+            - STROKE_WEIGHT 
+            - bullet.radius < 0
+        ) {
             return true;
         }
         else {
@@ -43,8 +48,12 @@ class BulletHandler {
         let i = 0;
         while(i < this.bulletList.length) {
             let bullet = this.bulletList[i];
-            if(this.bulletCollideWithAxis(bullet) || this.bulletCollideWithOpponentTank(bullet)) {
+            if(this.bulletCollideWithAxis(bullet)) {
                 this.removeBullet(i);
+            }
+            else if(this.bulletCollideWithOpponentTank(bullet)) {
+                this.removeBullet(i);
+                this.opponent.lostHealth(1);
             }
             else {
                 i++;

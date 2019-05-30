@@ -1,4 +1,4 @@
-var player,opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler;
+var player, opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler;
 
 function setup() {
     setupSocketListeningForAction();
@@ -38,7 +38,8 @@ function createTwoTanks(data) {
         0.2,   // Decelerating speed
         PI / 60,   // Turning speed
         propertyOfPlayer.color, // Color of the tank,
-        typeOfPlayer // The type of the player, for example: player 1 has type 0, player 2 has type 1
+        typeOfPlayer, // The type of the player, for example: player 1 has type 0, player 2 has type 1
+        6 // The health of the player
     );
     
     opponent = new Tank(
@@ -51,7 +52,8 @@ function createTwoTanks(data) {
         0.2,
         PI / 60,
         propertyOfOpponent.color,
-        1 - typeOfPlayer
+        1 - typeOfPlayer,
+        6
     );
 }
 
@@ -78,8 +80,14 @@ function getPropertyOfPlayerBasedOnType(typeOfPlayer) {
 }
 
 function createHandlers() {
-    playerBulletHandler = new BulletHandler(player);
-    opponentBulletHandler = new BulletHandler(opponent);
+    playerBulletHandler = new BulletHandler(
+        player,  // Player's tank which is relative to each client
+        opponent // Opponent's tank which is relative to each client
+    );
+    opponentBulletHandler = new BulletHandler(
+        opponent,
+        player
+    );
     playerGlobalHandler = new GlobalHandler(player);
     opponentGlobalHandler = new GlobalHandler(opponent);
 }
@@ -88,13 +96,26 @@ function setupSocketListeningForAction() {
     socketGlobalHandler.listenForControllingAction();
 }
 
-function drawAllObjects() {
-    push();
-    background(0, 0, 0);
+function drawTwoPlayers() {
     player.draw();
     opponent.draw();
+}
+
+function runAllHandlers() {
     playerBulletHandler.draw();
     opponentBulletHandler.draw();
     playerGlobalHandler.draw()
-    pop();
+}
+
+function drawAllObjects() {
+    if(playerGlobalHandler.gameEnded() === false) {
+        push();
+        background(0, 0, 0);
+        drawTwoPlayers();
+        runAllHandlers();
+        pop();
+    }
+    else {
+        playerGlobalHandler.handleFinalResult();
+    }
 }

@@ -84,6 +84,31 @@ class GlobalHandler {
         }
     }
     
+    gameEnded() {
+        if(player.health > 0 && opponent.health > 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    displayTheResult(result) {
+        push();
+        textSize(30);
+        fill('red');
+        text(result, canvas.width / 2 - 100, 100);
+        pop();
+    }
+
+    handleFinalResult() {
+        if(player.health > 0) {
+            this.displayTheResult('YOU WIN');
+        }
+        else {
+            this.displayTheResult('YOU LOSE');
+        }
+    }
     draw() {
         this.handleTwoTanksDeceleration();
         this.handleKeyPress();
