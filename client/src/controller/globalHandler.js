@@ -5,9 +5,8 @@ class GlobalHandler {
         this.tank = tank;
         this.fireButtonPressed = false;
         this.playerDecelerate = false;
-        this.opponentDecelerate = false;
     }
-
+    
     hanldeKeyTurn() {
         let direction = undefined;
         if(keyIsDown(LEFT_ARROW)) {
@@ -18,18 +17,16 @@ class GlobalHandler {
         }   
         if(direction !== undefined) {
             player.turn(direction);
-            socketGlobalHandler.sendTurningAction(direction);
+            socketGlobalHandler.sendTurningAction(player.angle);
         }
     }
 
     handleKeyDecelerate() {
         if(keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) {
             this.playerDecelerate = false;
-            socketGlobalHandler.sendStoppingDeceleratingAction();
         }
         else if(this.playerDecelerate === false){
             this.playerDecelerate = true;
-            socketGlobalHandler.sendDeceleratingAction();
         }
     }
 
@@ -43,7 +40,11 @@ class GlobalHandler {
         }
         if(direction !== undefined) {
             player.accelerate(direction);
-            socketGlobalHandler.sendAcceleratingAction(direction);
+            let pos = {
+                x: player.pos.x,
+                y: player.pos.y
+            };
+            socketGlobalHandler.sendMovingAction(pos);
         }
     }
 
@@ -67,20 +68,14 @@ class GlobalHandler {
         this.handleKeyFire();
     }
 
-    opponentTankDecelerate() {
-        this.opponentDecelerate = true;
-    }
-
-    opponentTankStopDecelerating() {
-        this.opponentDecelerate = false;
-    }
-
-    handleTwoTanksDeceleration() {
+    handleDeceleration() {
         if(this.playerDecelerate === true) {
             player.decelerate();
-        }
-        if(this.opponentDecelerate === true) {
-            opponent.decelerate();
+            let pos = {
+                x: player.pos.x,
+                y: player.pos.y
+            };
+            socketGlobalHandler.sendMovingAction(pos);
         }
     }
     
@@ -110,7 +105,7 @@ class GlobalHandler {
         }
     }
     draw() {
-        this.handleTwoTanksDeceleration();
+        this.handleDeceleration();
         this.handleKeyPress();
     }
 }

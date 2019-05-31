@@ -127,6 +127,15 @@ class Tank  {
         this.health -= damage;
     }
 
+    moveToPos(pos) {
+        this.pos.x = pos.x;
+        this.pos.y = pos.y;
+    }
+
+    turnTo(angle) {
+        this.angle = angle;
+    }
+
     drawCircle() {
         circle(0, 0, this.radius * 2);
     }

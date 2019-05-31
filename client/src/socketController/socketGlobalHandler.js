@@ -39,29 +39,20 @@ class SocetGlobalHandler {
 
     }
 
-    sendAcceleratingAction(direction) {
+    sendMovingAction(pos) {
         socket.emit('Control', {
-            type: 'Accelerate',
-            direction: direction
+            type: 'Move',
+            pos : {
+                x: pos.x,
+                y: pos.y
+            }
         });
     }
 
-    sendDeceleratingAction() {
-        socket.emit('Control', {
-            type: 'Decelerate',
-        });
-    }
-    
-    sendStoppingDeceleratingAction() {
-        socket.emit('Control', {
-            type: 'Stop decelerating',
-        });
-    }
-
-    sendTurningAction(direction) {
+    sendTurningAction(angle) {
         socket.emit('Control', {
             type: 'Turn',
-            direction: direction
+            angle: angle
         });
     }
 
@@ -70,12 +61,6 @@ class SocetGlobalHandler {
             type: 'Shoot'
         });
     }
-    
-    // sendLosingHealthAction() {
-    //     socket.emit('Control', {
-    //         type: 'Lost health'
-    //     });
-    // }
 
     setupListeningAndHandling() {
         socket.on('Please wait', () => changeDomContentTo('/public/pages/waitingPage.html'));
@@ -102,20 +87,14 @@ class SocetGlobalHandler {
     }
 
     handleControllingActionReceived(action) {
-        if(action.type === 'Turn') {
-            opponent.turn(action.direction);
+        if(action.type === 'Move') {
+            opponent.moveToPos(action.pos);
         }
+        if(action.type === 'Turn') {
+            opponent.turnTo(action.angle);
+         }
         if(action.type === 'Shoot') {
             opponentBulletHandler.createBullet();
-        }
-        if(action.type === 'Accelerate') {
-            opponent.accelerate(action.direction);
-        }
-        if(action.type === 'Decelerate') {
-            playerGlobalHandler.opponentTankDecelerate();
-        }
-        if(action.type === 'Stop decelerating') {
-            playerGlobalHandler.opponentTankStopDecelerating();
         }
     }
 }
