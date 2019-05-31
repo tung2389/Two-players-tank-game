@@ -6,7 +6,15 @@ class GlobalHandler {
         this.fireButtonPressed = false;
         this.playerDecelerate = false;
     }
-    
+
+    getPlayerPos() {
+        let pos = {
+            x: player.pos.x,
+            y: player.pos.y
+        };
+        return pos;
+    }
+
     hanldeKeyTurn() {
         let direction = undefined;
         if(keyIsDown(LEFT_ARROW)) {
@@ -40,10 +48,7 @@ class GlobalHandler {
         }
         if(direction !== undefined) {
             player.accelerate(direction);
-            let pos = {
-                x: player.pos.x,
-                y: player.pos.y
-            };
+            let pos = this.getPlayerPos();
             socketGlobalHandler.sendMovingAction(pos);
         }
     }
@@ -71,10 +76,7 @@ class GlobalHandler {
     handleDeceleration() {
         if(this.playerDecelerate === true) {
             player.decelerate();
-            let pos = {
-                x: player.pos.x,
-                y: player.pos.y
-            };
+            let pos = this.getPlayerPos();
             socketGlobalHandler.sendMovingAction(pos);
         }
     }

@@ -2,38 +2,6 @@ var socket = io();
 var socketGlobalHandler;
 var playerData;
 
-async function changeDomContentTo(url) {
-    let htmlContent = await getHTMLContent(url);
-    rewriteHTMLFile(htmlContent);
-}
-
-async function getHTMLContent(url) {
-    let responseObject = await fetch(url, {
-        headers: {
-            'Content-Type':'text/html'
-        }
-    });
-    let htmlContent = await responseObject.text();
-    return htmlContent;
-}
-
-function rewriteHTMLFile(htmlContent) {
-    document.open();
-    document.write(htmlContent);
-    document.close();
-}
-
-function isPlayerNameValid(playerName) {
-    if(playerName !== "")
-        return true;
-    else
-        return false;
-}
-
-function getUserName() {
-    return document.getElementById('name').value;
-}
-
 class SocetGlobalHandler {
     constructor() {
 
@@ -42,10 +10,7 @@ class SocetGlobalHandler {
     sendMovingAction(pos) {
         socket.emit('Control', {
             type: 'Move',
-            pos : {
-                x: pos.x,
-                y: pos.y
-            }
+            pos: pos
         });
     }
 
@@ -63,16 +28,16 @@ class SocetGlobalHandler {
     }
 
     setupListeningAndHandling() {
-        socket.on('Please wait', () => changeDomContentTo('/public/pages/waitingPage.html'));
+        socket.on('Please wait', () => pageController.changeDomContentTo('/public/pages/waitingPage.html'));
         socket.on('Starting battle', (data) => {
-            changeDomContentTo('/public/index.html');
+            pageController.changeDomContentTo('/public/index.html');
             playerData = data;
         });
     }
 
     findPlayer() {
-        let playerName = getUserName();
-        if(isPlayerNameValid(playerName)) {
+        let playerName = pageController.getUserName();
+        if(pageController.isPlayerNameValid(playerName)) {
             socket.emit('Find player',{name:playerName});
         }
         else {
