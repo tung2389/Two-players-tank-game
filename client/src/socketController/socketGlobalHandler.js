@@ -1,6 +1,7 @@
 var socket = io();
 var socketGlobalHandler;
 var playerData;
+var map;
 
 class SocetGlobalHandler {
     constructor() {
