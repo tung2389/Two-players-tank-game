@@ -1,6 +1,27 @@
 class WallHandler {
     constructor(map) {
         this.map = map;
+        this.wallList = this.createListOfWallObjects();
+    }
+
+    createListOfWallObjects() {
+        let wallList = [];
+        for(let i = 0; i < this.map.length; i++) {
+            let wallInfo = this.map[i];
+            this.pushWallIntoArray(wallInfo, wallList);
+        }
+        return wallList;
+    }
+
+    pushWallIntoArray(wallInfo, wallList) {
+        wallList.push(new Wall(
+            wallInfo.x1,
+            wallInfo.y1,
+            wallInfo.x2,
+            wallInfo.y2,
+            4,         // The thickness of the wall
+            'white'    // The color of the wall
+        ));
     }
 
     getSlopeOfLine(x1, y1, x2, y2) {
@@ -21,8 +42,8 @@ class WallHandler {
     }
 
     bulletCollideWithWall(bulletPos) {
-        for(let i = 0; i < map.length; i++) {
-            let wall = map[i];
+        for(let i = 0; i < this.wallList.length; i++) {
+            let wall = this.wallList[i];
             if(this.collideWithWall(bulletPos, wall)) {
                 return true;
             }
@@ -33,8 +54,8 @@ class WallHandler {
     }
 
     draw() {
-        for(let i = 0; i < map.length; i++) {
-            let wall = map[i];
+        for(let i = 0; i < this.wallList.length; i++) {
+            let wall = this.wallList[i];
             wall.draw();
         }
     }

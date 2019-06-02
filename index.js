@@ -9,8 +9,6 @@ const handleMatching = require('./controller/handleMatching');
 const handleControlling = require('./controller/handleControlling');
 const handleExiting = require('./controller/handleExiting');
 
-const gettingStartedPage = require('./routes/starting');
-const waitingPage = require('./routes/waiting');
 const gamePage = require('./routes/tank.io');
 
 let queue = [];
@@ -23,8 +21,6 @@ app.get('/', (req,res) => {
 
 app.use('/',express.static(__dirname + '/client'));
 
-// app.use('/gettingstarted', gettingStartedPage);
-// app.use('/waiting', waitingPage);
 app.use('/play', gamePage);
 
 io.on('connection', function(socket) {
