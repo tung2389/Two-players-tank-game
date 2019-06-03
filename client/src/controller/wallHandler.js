@@ -30,14 +30,13 @@ class WallHandler {
     }
     
     collideWithWall(bulletPos, wall) {
-        if(wall.type === 'custom') {
-            let slopeOfBulletAndFirstPointOfWall = this.getSlopeOfLine(bulletPos.x, bulletPos.y, wall.x1, wall.y1);
-            if(slopeOfBulletAndFirstPointOfWall === wall.slope) {
-                return true;
-            }
-            else {
-                return;
-            }
+        let slopeOfBulletAndFirstPointOfWall = this.getSlopeOfLine(bulletPos.x, bulletPos.y, wall.x1, wall.y1);
+        console.log(slopeOfBulletAndFirstPointOfWall, wall.slope);
+        if(slopeOfBulletAndFirstPointOfWall === wall.slope) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 

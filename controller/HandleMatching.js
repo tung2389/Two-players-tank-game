@@ -1,3 +1,5 @@
+const generateRandomWallMap = require('./generateRandomWallMap');
+
 function handleMatch(queue, rooms, names, player, data){
     saveName(player, data, names);
     if(queue.length === 0) {
@@ -24,7 +26,7 @@ function match(queue, rooms, names, player) {
 
     joinTwoPlayersIntoOneRoom(player, opponent, roomName);
     saveRoom(player, opponent, rooms, roomName);
-    sendPlayersInfo(player, opponent, roomName, names);
+    sendPlayersInfoAndMap(player, opponent, roomName, names);
 }
 
 function joinTwoPlayersIntoOneRoom(player, opponent, roomName) {
@@ -39,19 +41,24 @@ function saveRoom(player, opponent, rooms, roomName) {
 }
 
 //Send needed information to each client
-function sendPlayersInfo(player, opponent, roomName, names) {
-    player.emit('Starting battle', {
-        'opponentName': names[opponent.id], 
-        'room': roomName, 
-        'number': 1
-    });
-    opponent.emit('Starting battle', {
-        'opponentName': names[player.id], 
-        'room': roomName, 
-        'number': 0
-    });
+function sendPlayersInfoAndMap(player, opponent, roomName, names) {
+    let map = generateRandomWallMap();
+    let playerData = constructPlayerData(names[opponent.id], roomName, 1, map);
+    let opponentData = constructPlayerData(names[player.id], roomName, 0, map);
+    console.log(map);
+    player.emit('Starting battle', playerData);
+    opponent.emit('Starting battle', opponentData);
 }
 
-
+function constructPlayerData(opponentName, roomName,  number, map) {
+    return {
+        playerInfo: {
+            'opponentName': opponentName,
+            'room': roomName,
+            'number': number,
+        },
+        'map': map
+    }
+}
 
 module.exports = handleMatch;

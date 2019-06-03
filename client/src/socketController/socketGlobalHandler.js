@@ -1,7 +1,7 @@
 var socket = io();
 var socketGlobalHandler;
 var playerData;
-var map;
+var wallMap;
 
 class SocetGlobalHandler {
     constructor() {
@@ -32,7 +32,8 @@ class SocetGlobalHandler {
         socket.on('Please wait', () => pageController.changeDomContentTo('/public/pages/waitingPage.html'));
         socket.on('Starting battle', (data) => {
             pageController.changeDomContentTo('/public/index.html');
-            playerData = data;
+            playerData = data.playerInfo;
+            wallMap = data.map;
         });
     }
 

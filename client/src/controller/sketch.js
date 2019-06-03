@@ -1,4 +1,4 @@
-var player, opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler;
+var player, opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler, wallHandler;
 
 function setup() {
     setupSocketListeningForAction();
@@ -13,6 +13,7 @@ function createAllObjects(data) {
     createTheCanvas();
     createTwoTanks(data);
     createHandlers();
+    createWalls();
 };
 
 function createTheCanvas() {
@@ -92,6 +93,10 @@ function createHandlers() {
     opponentGlobalHandler = new GlobalHandler(opponent);
 }
 
+function createWalls() {
+    wallHandler = new WallHandler(wallMap);
+}
+
 function setupSocketListeningForAction() {
     socketGlobalHandler.listenForControllingAction();
 }
@@ -105,6 +110,7 @@ function runAllHandlers() {
     playerBulletHandler.draw();
     opponentBulletHandler.draw();
     playerGlobalHandler.draw()
+    wallHandler.draw();
 }
 
 function drawAllObjects() {

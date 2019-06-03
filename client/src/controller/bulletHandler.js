@@ -48,7 +48,7 @@ class BulletHandler {
         let i = 0;
         while(i < this.bulletList.length) {
             let bullet = this.bulletList[i];
-            if(this.bulletCollideWithAxis(bullet)) {
+            if(this.bulletCollideWithAxis(bullet) || wallHandler.bulletCollideWithWall(bullet.pos)) {
                 this.removeBullet(i);
             }
             else if(this.bulletCollideWithOpponentTank(bullet)) {
