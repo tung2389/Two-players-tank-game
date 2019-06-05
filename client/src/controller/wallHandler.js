@@ -24,26 +24,15 @@ class WallHandler {
         ));
     }
 
-    getSlopeOfLine(x1, y1, x2, y2) {
-        let slope = (y2 - y1) / (x2 - x1);
-        return slope;
-    }
-    
-    collideWithWall(bulletPos, wall) {
-        let slopeOfBulletAndFirstPointOfWall = this.getSlopeOfLine(bulletPos.x, bulletPos.y, wall.x1, wall.y1);
-        console.log(slopeOfBulletAndFirstPointOfWall, wall.slope);
-        if(slopeOfBulletAndFirstPointOfWall === wall.slope) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    sideOfWallTheBulletLieOn(bulletPos, wall) {
+        console.log(bulletPos);
+        return (bulletPos.x - wall.x1) * (wall.y2 - wall.y1) - (bulletPos.y - wall.y1) * (wall.x2 - wall.x1);
     }
 
-    bulletCollideWithWall(bulletPos) {
+    bulletCollideWithWall(prevBulletPos, bulletPos) {
         for(let i = 0; i < this.wallList.length; i++) {
             let wall = this.wallList[i];
-            if(this.collideWithWall(bulletPos, wall)) {
+            if(this.sideOfWallTheBulletLieOn(prevBulletPos, wall) * this.sideOfWallTheBulletLieOn(bulletPos, wall) < 0) {
                 return true;
             }
             else {

@@ -14,6 +14,13 @@ class Bullet {
         this.color = color;
     }
 
+    getPrevPos() {
+        return {
+            x: this.pos.x - this.direction.x * this.speed,
+            y: this.pos.y - this.direction.y * this.speed
+        };
+    }
+
     handleMovement() {
         this.pos.x += this.direction.x * this.speed;
         this.pos.y += this.direction.y * this.speed;
