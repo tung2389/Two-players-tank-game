@@ -45,7 +45,6 @@ function sendPlayersInfoAndMap(player, opponent, roomName, names) {
     let map = generateRandomWallMap();
     let playerData = constructPlayerData(names[opponent.id], roomName, 1, map);
     let opponentData = constructPlayerData(names[player.id], roomName, 0, map);
-    console.log(map);
     player.emit('Starting battle', playerData);
     opponent.emit('Starting battle', opponentData);
 }

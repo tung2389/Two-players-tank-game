@@ -13,7 +13,7 @@ function createAllObjects(data) {
     createTheCanvas();
     createTwoTanks(data);
     createHandlers();
-    createWalls();
+    //createWalls();
 };
 
 function createTheCanvas() {
@@ -110,7 +110,7 @@ function runAllHandlers() {
     playerBulletHandler.draw();
     opponentBulletHandler.draw();
     playerGlobalHandler.draw()
-    wallHandler.draw();
+    // wallHandler.draw();
 }
 
 function drawAllObjects() {

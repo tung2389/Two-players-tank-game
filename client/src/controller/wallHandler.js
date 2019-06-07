@@ -25,14 +25,13 @@ class WallHandler {
     }
 
     sideOfWallTheBulletLieOn(bulletPos, wall) {
-        console.log(bulletPos);
-        return (bulletPos.x - wall.x1) * (wall.y2 - wall.y1) - (bulletPos.y - wall.y1) * (wall.x2 - wall.x1);
+        return (bulletPos.y - wall.y1) * (wall.x2 - wall.x1) - (bulletPos.x - wall.x1) * (wall.y2 - wall.y1);
     }
 
     bulletCollideWithWall(prevBulletPos, bulletPos) {
         for(let i = 0; i < this.wallList.length; i++) {
             let wall = this.wallList[i];
-            if(this.sideOfWallTheBulletLieOn(prevBulletPos, wall) * this.sideOfWallTheBulletLieOn(bulletPos, wall) < 0) {
+            if(this.sideOfWallTheBulletLieOn(prevBulletPos, wall) * this.sideOfWallTheBulletLieOn(bulletPos, wall) <= 0) {
                 return true;
             }
             else {
