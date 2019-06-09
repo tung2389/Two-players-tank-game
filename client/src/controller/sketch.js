@@ -116,7 +116,7 @@ function runAllHandlers() {
 function drawAllObjects() {
     if(playerGlobalHandler.gameEnded() === false) {
         push();
-        background(0, 0, 0);
+        background(172, 254, 0);
         drawTwoPlayers();
         runAllHandlers();
         pop();
