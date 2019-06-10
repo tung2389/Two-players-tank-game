@@ -13,7 +13,7 @@ class Grenade {
         this.direction = p5.Vector.fromAngle(tank.angle + PI);
         this.originalPos = returnPosByDirection(tank, this.direction); 
         this.pos = returnPosByDirection(tank, this.direction); 
-        this.explodingTime = 1;
+        this.explodingTime = 1 * FPS;
         this.doneExploding = false;
     }
 
