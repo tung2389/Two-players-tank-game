@@ -30,19 +30,23 @@ class GrenadeHandler {
         }
     }
     tankDamagedByExplosion(tank) {
-        for(let i = 0;i < this.grenadeList.length; i++) {
+        let i = 0;
+        while(i < this.grenadeList.length) {
             let grenade = this.grenadeList[i];
             if(grenade.explodeNow()) {
                 if(!grenade.doneExploding) {
-                    if(tankInsideExplodingRange(grenade, tank)) {
+                    if(this.tankInsideExplodingRange(grenade, tank)) {
                         tank.lostHealth(grenade.explodingDamage);
+                        i++;
                     }
                 }
                 else {
                     this.removeGrenade(i);
                 }
             }
-            grenade.draw();
+            else {
+                i++;
+            }
         }
     }
 }
