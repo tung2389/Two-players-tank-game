@@ -3,7 +3,7 @@ const colorOfMiniBomb = 'black';
 const FPS = 60;
 
 class Grenade {
-    constructor(radius, speed, flyingDistance, explodingRadius, explodingDamage, numberOfMiniBomb) {
+    constructor(tank, radius, speed, flyingDistance, explodingRadius, explodingDamage, numberOfMiniBomb) {
         this.radius = radius;
         this.speed = speed;
         this.flyingDistance = flyingDistance;
@@ -44,16 +44,6 @@ class Grenade {
         }
         else {
             this.doneExploding = true;
-        }
-    }
-
-    tankDamagedByExplosion(tank) {
-        if(dist(this.pos.x, this.pos.y, tank.pos.x, tank.pos.y) 
-           - this.explodingRadius 
-           - tank.radius
-           - STROKE_WEIGHT < 0
-        ) {
-            tank.lostHealth(explodingDamage);
         }
     }
 
