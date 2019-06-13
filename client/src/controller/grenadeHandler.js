@@ -1,11 +1,10 @@
 class GrenadeHandler {
-    constructor(tank) {
-        this.tank = tank;
+    constructor() {
         this.grenadeList = [];
     }
-    createGrenade() {
+    createGrenade(tank) {
         this.grenadeList.push(new Grenade(
-            this.tank, // The owner of the grenade
+            tank, // The owner of the grenade
             6,         // Radius
             10,        // Speed
             100,       // Flying distance

@@ -1,4 +1,4 @@
-var player, opponent, canvas, playerGlobalHandler, opponentGlobalHandler, playerBulletHandler, opponentBulletHandler, wallHandler;
+var player, opponent, canvas, globalHandler, bulletHandler, wallHandler;
 
 function setup() {
     setupSocketListeningForAction();
@@ -81,16 +81,8 @@ function getPropertyOfPlayerBasedOnType(typeOfPlayer) {
 }
 
 function createHandlers() {
-    playerBulletHandler = new BulletHandler(
-        player,  // Player's tank which is relative to each client
-        opponent // Opponent's tank which is relative to each client
-    );
-    opponentBulletHandler = new BulletHandler(
-        opponent,
-        player
-    );
-    playerGlobalHandler = new GlobalHandler(player);
-    opponentGlobalHandler = new GlobalHandler(opponent);
+    bulletHandler = new BulletHandler();
+    globalHandler = new GlobalHandler();
 }
 
 function createWalls() {
@@ -107,14 +99,13 @@ function drawTwoPlayers() {
 }
 
 function runAllHandlers() {
-    playerBulletHandler.draw();
-    opponentBulletHandler.draw();
-    playerGlobalHandler.draw()
+    bulletHandler.draw();
+    globalHandler.draw();
     // wallHandler.draw();
 }
 
 function drawAllObjects() {
-    if(playerGlobalHandler.gameEnded() === false) {
+    if(globalHandler.gameEnded() === false) {
         push();
         background(172, 254, 0);
         drawTwoPlayers();
@@ -122,6 +113,6 @@ function drawAllObjects() {
         pop();
     }
     else {
-        playerGlobalHandler.handleFinalResult();
+        globalHandler.handleFinalResult();
     }
 }

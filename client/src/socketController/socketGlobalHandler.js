@@ -61,7 +61,7 @@ class SocetGlobalHandler {
             opponent.turnTo(action.angle);
          }
         if(action.type === 'Shoot') {
-            opponentBulletHandler.createBullet();
+            bulletHandler.createBullet(opponent);
         }
     }
 }

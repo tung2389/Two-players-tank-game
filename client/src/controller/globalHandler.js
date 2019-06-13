@@ -1,8 +1,7 @@
 const ENTER_KEY = 13;
 
 class GlobalHandler {
-    constructor(tank) {
-        this.tank = tank;
+    constructor() {
         this.fireButtonPressed = false;
         this.playerDecelerate = false;
     }
@@ -56,7 +55,7 @@ class GlobalHandler {
     handleKeyFire() {
         if(keyIsDown(ENTER_KEY)) {
             if(!this.fireButtonPressed) {
-                playerBulletHandler.createBullet();
+                bulletHandler.createBullet(player);
                 socketGlobalHandler.sendShootingAction();
             }
             this.fireButtonPressed = true;

@@ -1,16 +1,16 @@
 class BulletHandler {
-    constructor(player, opponent) {
+    constructor() {
         this.player = player;
         this.opponent = opponent;
         this.bulletList = [];
     }
 
-    createBullet() {
+    createBullet(tank) {
         this.bulletList.push(new Bullet(
-            this.player,
+            tank,
             10, // Speed
             10,  // Radius
-            this.player.color
+            tank.color
         ));
     }
 
@@ -31,17 +31,38 @@ class BulletHandler {
         }
     }
 
-    bulletCollideWithOpponentTank(bullet) {
-        if(dist(bullet.pos.x, bullet.pos.y, this.opponent.pos.x, this.opponent.pos.y) 
-            - this.opponent.radius 
+    distanceFromBulletToTank(bullet, tank) {
+        return dist(bullet.pos.x, bullet.pos.y, tank.pos.x, tank.pos.y) 
+            - tank.radius 
             - STROKE_WEIGHT 
-            - bullet.radius < 0
-        ) {
+            - bullet.radius;
+    }
+
+    typeOfBulletDifferentFromTheTankItCollidesWith(bullet, tank) {
+        if(bullet.tank.type !== tank.type) {
             return true;
         }
         else {
             return false;
         }
+    }
+
+    bulletCollideWithOpponentTank(bullet) {
+        if(this.distanceFromBulletToTank(bullet, opponent) < 0 && this.typeOfBulletDifferentFromTheTankItCollidesWith(bullet, opponent)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    bulletCollideWithPlayerTank(bullet) {
+        if(this.distanceFromBulletToTank(bullet, player) < 0 && this.typeOfBulletDifferentFromTheTankItCollidesWith(bullet, player)) {
+            return true;
+        }
+        else {
+            return false;
+        }    
     }
 
     draw() {
@@ -52,9 +73,13 @@ class BulletHandler {
             if(this.bulletCollideWithAxis(bullet) /*|| wallHandler.bulletCollideWithWall(bulletPrevPos, bullet.pos)*/) {
                 this.removeBullet(i);
             }
+            else if(this.bulletCollideWithPlayerTank(bullet)) {
+                this.removeBullet(i);
+                player.lostHealth(1);
+            }
             else if(this.bulletCollideWithOpponentTank(bullet)) {
                 this.removeBullet(i);
-                this.opponent.lostHealth(1);
+                opponent.lostHealth(1);
             }
             else {
                 i++;
