@@ -1,8 +1,10 @@
 const ENTER_KEY = 13;
+const U_KEY = 85;
 
 class GlobalHandler {
     constructor() {
         this.fireButtonPressed = false;
+        this.throwGrenadeButtonPressed = false;
         this.playerDecelerate = false;
     }
 
@@ -64,12 +66,24 @@ class GlobalHandler {
             this.fireButtonPressed = false;
         }
     }
-
+    handleKeyThrowBomb() {
+        if(keyIsDown(U_KEY)) {
+            if(!this.throwGrenadeButtonPressed) {
+                grenadeHandler.createGrenade(player);
+                socketGlobalHandler.sendThrowingGrenadeAction();
+            }
+            this.throwGrenadeButtonPressed = true;
+        }
+        else {
+            this.throwGrenadeButtonPressed = false;
+        }
+    }
     handleKeyPress() {
         this.hanldeKeyTurn();
         this.handleKeyDecelerate();
         this.handleKeyAccelerate();
         this.handleKeyFire();
+        this.handleKeyThrowBomb();
     }
 
     handleDeceleration() {

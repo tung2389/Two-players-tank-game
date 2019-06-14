@@ -7,7 +7,7 @@ class Grenade {
         this.radius = radius;
         this.speed = speed;
         this.flyingDistance = flyingDistance;
-        this.explodingDamage = explodingRadius;
+        this.explodingRadius = explodingRadius;
         this.explodingDamage = explodingDamage;
         this.numberOfMiniBomb = numberOfMiniBomb;
         this.direction = p5.Vector.fromAngle(tank.angle + PI);
@@ -23,7 +23,7 @@ class Grenade {
     }
     
     explodeNow() {
-        if(dist(this.pos.x, this.pos.y, this.originalPos.x, this.originalPos.y) >= flyingDistance) {
+        if(dist(this.pos.x, this.pos.y, this.originalPos.x, this.originalPos.y) >= this.flyingDistance) {
             return true;
         }
         else {
@@ -32,8 +32,9 @@ class Grenade {
     }
 
     explode() {
+        console.log(1);
         push();
-        fill(255, 51, 0);
+        fill('red');
         circle(this.pos.x, this.pos.y, this.explodingRadius * 2);
         pop();
     }

@@ -1,4 +1,4 @@
-var player, opponent, canvas, globalHandler, bulletHandler, wallHandler;
+var player, opponent, canvas, globalHandler, bulletHandler, grenadeHandler, wallHandler;
 
 function setup() {
     setupSocketListeningForAction();
@@ -83,6 +83,7 @@ function getPropertyOfPlayerBasedOnType(typeOfPlayer) {
 function createHandlers() {
     bulletHandler = new BulletHandler();
     globalHandler = new GlobalHandler();
+    grenadeHandler = new GrenadeHandler();
 }
 
 function createWalls() {
@@ -101,6 +102,7 @@ function drawTwoPlayers() {
 function runAllHandlers() {
     bulletHandler.draw();
     globalHandler.draw();
+    grenadeHandler.draw();
     // wallHandler.draw();
 }
 
