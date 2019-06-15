@@ -9,7 +9,7 @@ class BulletHandler {
         this.bulletList.push(new Bullet(
             tank,
             10, // Speed
-            10,  // Radius
+            4,  // Radius
             tank.color
         ));
     }
@@ -19,10 +19,10 @@ class BulletHandler {
     }
 
     bulletCollideWithAxis(bullet) {
-        if( bullet.pos.x < 0 ||
-            bullet.pos.y < 0 ||
-            bullet.pos.x > canvas.width ||
-            bullet.pos.y > canvas.height
+        if( bullet.pos.x - bullet.radius < 0 ||
+            bullet.pos.y - bullet.radius < 0 ||
+            bullet.pos.x + bullet.radius > canvas.width ||
+            bullet.pos.y + bullet.radius > canvas.height
         ) {
             return true;
         }

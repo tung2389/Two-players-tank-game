@@ -33,7 +33,7 @@ function createTwoTanks(data) {
         propertyOfPlayer.x, // x-coordinate
         propertyOfPlayer.y, // y-coordinate
         propertyOfPlayer.angle, // The initial angle of the tank
-        30,  // Radius
+        15,  // Radius
         6,   // Maximum speed
         0.2,   // Accelerating speed
         0.2,   // Decelerating speed
@@ -47,7 +47,7 @@ function createTwoTanks(data) {
         propertyOfOpponent.x,
         propertyOfOpponent.y,
         propertyOfOpponent.angle,
-        30,
+        15,
         6,
         0.2,
         0.2,
@@ -94,6 +94,12 @@ function setupSocketListeningForAction() {
     socketGlobalHandler.listenForControllingAction();
 }
 
+function drawBackground() {
+    stroke('black');
+    fill('white');
+    rect(0, 0, canvas.width, canvas.height);
+}
+
 function drawTwoPlayers() {
     player.draw();
     opponent.draw();
@@ -109,7 +115,7 @@ function runAllHandlers() {
 function drawAllObjects() {
     if(globalHandler.gameEnded() === false) {
         push();
-        background(172, 254, 0);
+        drawBackground();
         drawTwoPlayers();
         runAllHandlers();
         pop();

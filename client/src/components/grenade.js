@@ -21,9 +21,45 @@ class Grenade {
         this.pos.x += this.direction.x * this.speed;
         this.pos.y += this.direction.y * this.speed;
     }
-    
-    explodeNow() {
+    collideWithTank(tank) {
+        if(dist(this.pos.x, this.pos.y, tank.pos.x, tank.pos.y)
+           - this.radius
+           - tank.radius
+           - STROKE_WEIGHT 
+           < 0
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    collideWithAxis() {
+        if(
+            this.pos.x - this.radius < 0 ||
+            this.pos.y - this.radius < 0 ||
+            this.pos.x + this.radius > canvas.width ||
+            this.pos.y + this.radius > canvas.heigth  
+        ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    cannotFlyAnymore() {
         if(dist(this.pos.x, this.pos.y, this.originalPos.x, this.originalPos.y) >= this.flyingDistance) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    explodeNow() {
+        if(this.collideWithTank(opponent) ||
+           this.collideWithAxis() ||
+           this.cannotFlyAnymore()
+        ) {
             return true;
         }
         else {

@@ -1,5 +1,5 @@
 const STROKE_WEIGHT = 4;
-
+const GUN_LENGTH = 20;
 class Tank  {
     constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health) {
         this.pos = createVector(x, y);
@@ -140,15 +140,14 @@ class Tank  {
         circle(0, 0, this.radius * 2);
     }
 
-    drawArrow() {
-        line(0, this.radius / 4, -3 * this.radius / 8, 0);
-        line(0, -this.radius / 4, -3 * this.radius / 8, 0);
+    drawGun() {
+        line(0, 0, -GUN_LENGTH, 0);
     }
 
     drawColor() {
         strokeWeight(STROKE_WEIGHT);
         stroke(this.color);
-        fill("black");
+        fill("white");
     }
 
     drawTank() {
@@ -156,7 +155,7 @@ class Tank  {
         rotate(this.angle); // Rotate around origin (pos.x, pos.y). This is the reason why we must call translate first
         this.drawColor();
         this.drawCircle();
-        this.drawArrow();
+        this.drawGun();
     }
 
     draw() {
