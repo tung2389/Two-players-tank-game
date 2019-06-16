@@ -1,7 +1,7 @@
 const STROKE_WEIGHT = 4;
 const GUN_LENGTH = 20;
 class Tank  {
-    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health) {
+    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health, id) {
         this.pos = createVector(x, y);
         this.currentSpeed = createVector(0, 0);
         this.radius = radius;
@@ -13,6 +13,7 @@ class Tank  {
         this.color = color;
         this.type = type;
         this.health = health;
+        this.id = id;
     }
 
     turn(direction) {

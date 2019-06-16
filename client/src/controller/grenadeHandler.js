@@ -35,7 +35,10 @@ class GrenadeHandler {
             if(grenade.explodeNow()) {
                 if(!grenade.doneExploding) {
                     if(this.tankInsideExplodingRange(grenade, tank)) {
-                        tank.lostHealth(grenade.explodingDamage);
+                        if(!grenade.tankDamaged[tank.id]) {
+                            tank.lostHealth(grenade.explodingDamage);
+                            grenade.tankDamaged[tank.id] = true;
+                        }
                     }
                     i++;
                 }

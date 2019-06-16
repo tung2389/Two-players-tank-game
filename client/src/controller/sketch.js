@@ -2,7 +2,7 @@ var player, opponent, canvas, globalHandler, bulletHandler, grenadeHandler, wall
 
 function setup() {
     setupSocketListeningForAction();
-    createAllObjects(playerData);
+    createAllObjects(playersData);
 }
 
 function draw() {
@@ -40,7 +40,8 @@ function createTwoTanks(data) {
         PI / 60,   // Turning speed
         propertyOfPlayer.color, // Color of the tank,
         typeOfPlayer, // The type of the player, for example: player 1 has type 0, player 2 has type 1
-        6 // The health of the player
+        6, // The health of the player
+        playersData.player_id, // The id of the player
     );
     
     opponent = new Tank(
@@ -54,7 +55,8 @@ function createTwoTanks(data) {
         PI / 60,
         propertyOfOpponent.color,
         1 - typeOfPlayer,
-        6
+        6,
+        playersData.opponent_id
     );
 }
 

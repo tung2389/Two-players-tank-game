@@ -4,6 +4,7 @@ const FPS = 60;
 
 class Grenade {
     constructor(tank, radius, speed, flyingDistance, explodingRadius, explodingDamage, numberOfMiniBomb) {
+        this.tank = tank;
         this.radius = radius;
         this.speed = speed;
         this.flyingDistance = flyingDistance;
@@ -15,6 +16,7 @@ class Grenade {
         this.pos = returnPosByDirection(tank, this.direction); 
         this.explodingTime = 1 * FPS;
         this.doneExploding = false;
+        this.tankDamaged = [];
     }
 
     handleMovement() {
@@ -26,7 +28,8 @@ class Grenade {
            - this.radius
            - tank.radius
            - STROKE_WEIGHT 
-           < 0
+           < 0 
+           && this.tank.id !== tank.id
         ) {
             return true;
         }
@@ -57,6 +60,7 @@ class Grenade {
     }
     explodeNow() {
         if(this.collideWithTank(opponent) ||
+           this.collideWithTank(player) ||
            this.collideWithAxis() ||
            this.cannotFlyAnymore()
         ) {

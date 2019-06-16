@@ -26,7 +26,7 @@ function match(queue, rooms, names, player) {
 
     joinTwoPlayersIntoOneRoom(player, opponent, roomName);
     saveRoom(player, opponent, rooms, roomName);
-    sendPlayersInfoAndMap(player, opponent, roomName, names);
+    sendPlayersInfoAndMap(player, opponent, names);
 }
 
 function joinTwoPlayersIntoOneRoom(player, opponent, roomName) {
@@ -41,19 +41,20 @@ function saveRoom(player, opponent, rooms, roomName) {
 }
 
 //Send needed information to each client
-function sendPlayersInfoAndMap(player, opponent, roomName, names) {
+function sendPlayersInfoAndMap(player, opponent, names) {
     let map = generateRandomWallMap();
-    let playerData = constructPlayerData(names[opponent.id], roomName, 1, map);
-    let opponentData = constructPlayerData(names[player.id], roomName, 0, map);
+    let playerData = constructPlayerData(player.id, opponent.id, names[opponent.id], 1, map);
+    let opponentData = constructPlayerData(opponent.id, player.id, names[player.id], 0, map);
     player.emit('Starting battle', playerData);
     opponent.emit('Starting battle', opponentData);
 }
 
-function constructPlayerData(opponentName, roomName,  number, map) {
+function constructPlayerData(player_id, opponent_id, opponentName, number, map) {
     return {
-        playerInfo: {
+        playersInfo: {
+            'player_id': player_id,
+            'opponent_id': opponent_id,
             'opponentName': opponentName,
-            'room': roomName,
             'number': number,
         },
         'map': map
