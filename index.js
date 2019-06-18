@@ -15,13 +15,9 @@ let queue = [];
 let rooms = [];
 let names = [];
 
-app.get('/', (req,res) => {
-    res.send("Hello. This is tank.io - two players game");
-});
-
 app.use('/',express.static(__dirname + '/client'));
 
-app.use('/play', gamePage);
+app.use('/', gamePage);
 
 io.on('connection', function(socket) {
     console.log('User with id ' + socket.id + ' connected');

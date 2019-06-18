@@ -18,10 +18,10 @@ function createAllObjects(data) {
 
 function createTheCanvas() {
     canvas = new Canvas(
-        1300, // Width
+        1340, // Width
         600   // Height
     );
-    createCanvas(canvas.width, canvas.height);
+    createCanvas(canvas.width, canvas.height + 40);
 }
 
 function createTwoTanks(data) {
@@ -108,6 +108,10 @@ function drawTwoPlayers() {
     opponent.draw();
 }
 
+function drawInfo() {
+    player.drawReloading();
+}
+
 function runAllHandlers() {
     bulletHandler.draw();
     globalHandler.draw();
@@ -121,6 +125,7 @@ function drawAllObjects() {
         push();
         drawBackground();
         drawTwoPlayers();
+        drawInfo();
         runAllHandlers();
         pop();
     }

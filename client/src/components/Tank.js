@@ -1,5 +1,9 @@
 const STROKE_WEIGHT = 4;
 const GUN_LENGTH = 20;
+const GRENADE_PER_TIME = 1;
+const SMOKE_PER_TIME = 1;
+const RELOAD_TIME = 5;
+
 class Tank  {
     constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health, id) {
         this.pos = createVector(x, y);
@@ -77,13 +81,13 @@ class Tank  {
 
     // Handle collision of the tank with the x-axis or the y-axis
     handleCollisionWithAxis(pos, radius, limit, axis) {
-        if(pos + radius + STROKE_WEIGHT > limit) {
+        if(pos + radius + STROKE_WEIGHT + (GUN_LENGTH - radius) > limit) {
             this.currentSpeed[axis] = 0;
-            return limit - radius - STROKE_WEIGHT; 
+            return limit - radius - STROKE_WEIGHT - (GUN_LENGTH - radius); 
         }
-        else if(pos - radius - STROKE_WEIGHT < 0) {
+        else if(pos - radius - STROKE_WEIGHT - (GUN_LENGTH - radius) < 0) {
             this.currentSpeed[axis] = 0;
-            return radius + STROKE_WEIGHT;
+            return radius + STROKE_WEIGHT + (GUN_LENGTH - radius);
         }
         else {
             return pos;
@@ -159,6 +163,14 @@ class Tank  {
         this.drawGun();
     }
 
+    drawReloading() {
+        let posX = 600;
+        let posY = 620;
+        push();
+        circle(posX, posY, 30);
+        circle(posX + 40, posY, 30);
+        pop();
+    }
     draw() {
         push();
         this.handleMovement();

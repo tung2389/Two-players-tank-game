@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Enter your name</title>
+    <title>Two players tank game - Enter your name</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="../../src/controller/pageController.js"></script>
     <script src="../../src/socketController/socketGlobalHandler.js"></script>
 </head>
 <body>
-    <input align = "center" type="text" id = "name">
-    <button align = "center" onclick="socketGlobalHandler.findPlayer()">Find</button>
+    <div align = "center">
+        <h4>Hello. This is a game allowing you to play with a random person</h4>
+        <h4>Use arrow keys to move the tank. Press "Enter" to shoot, "U" to throw grenade and "I" to throw smoke bomb</h4>
+        <h4>This game requires two seperated computers for two players to play. For testing purpose, you can open two or more chrome tabs to play with yourself</h4>
+        <h4>Enjoy!</h4>
+        <input placeholder="Enter your name" type="text" id = "name">
+        <button onclick="socketGlobalHandler.findPlayer()">Find player</button>
+    </div>
     <script>
         socketGlobalHandler.setupListeningAndHandling();
     </script>
