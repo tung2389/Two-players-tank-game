@@ -4,13 +4,14 @@ class GrenadeHandler {
     }
     createGrenade(tank) {
         this.grenadeList.push(new Grenade(
-            tank, // The owner of the grenade
+            tank,      // The owner of the grenade
             6,         // Radius
             10,        // Speed
             400,       // Flying distance
-            100,         // Exploding radius
+            100,       // Exploding radius
             3,         // Exploding damage
-            6          // Number of mini bombs
+            6,         // Number of mini bombs
+            1          // Exploding time
         ))
     }
     removeGrenade(pos) {

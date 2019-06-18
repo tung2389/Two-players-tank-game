@@ -1,10 +1,11 @@
 const ENTER_KEY = 13;
 const U_KEY = 85;
-
+const I_KEY = 73;
 class GlobalHandler {
     constructor() {
         this.fireButtonPressed = false;
         this.throwGrenadeButtonPressed = false;
+        this.throwSmokeButtonPressed = false;
         this.playerDecelerate = false;
     }
 
@@ -76,6 +77,16 @@ class GlobalHandler {
         }
         else {
             this.throwGrenadeButtonPressed = false;
+        }
+        if(keyIsDown(I_KEY)) {
+            if(!this.throwSmokeButtonPressed) {
+                smokeHandler.createSmoke(player);
+                socketGlobalHandler.sendThrowingSmokeAction();
+            }
+            this.throwSmokeButtonPressed = true;
+        }
+        else {
+            this.throwSmokeButtonPressed = false;
         }
     }
     handleKeyPress() {

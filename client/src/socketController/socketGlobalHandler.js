@@ -34,6 +34,12 @@ class SocetGlobalHandler {
         });
     }
 
+    sendThrowingSmokeAction() {
+        socket.emit('Control', {
+            type: 'Throw smoke'
+        });
+    }
+
     setupListeningAndHandling() {
         socket.on('Please wait', () => pageController.changeDomContentTo('/public/pages/waitingPage.html'));
         socket.on('Starting battle', (data) => {
@@ -71,6 +77,9 @@ class SocetGlobalHandler {
         }
         if(action.type === 'Throw grenade') {
             grenadeHandler.createGrenade(opponent);
+        }
+        if(action.type === 'Throw smoke') {
+            smokeHandler.createSmoke(opponent);
         }
     }
 }

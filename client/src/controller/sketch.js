@@ -1,4 +1,4 @@
-var player, opponent, canvas, globalHandler, bulletHandler, grenadeHandler, wallHandler;
+var player, opponent, canvas, globalHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler;
 
 function setup() {
     setupSocketListeningForAction();
@@ -86,6 +86,7 @@ function createHandlers() {
     bulletHandler = new BulletHandler();
     globalHandler = new GlobalHandler();
     grenadeHandler = new GrenadeHandler();
+    smokeHandler = new SmokeHandler();
 }
 
 function createWalls() {
@@ -111,6 +112,7 @@ function runAllHandlers() {
     bulletHandler.draw();
     globalHandler.draw();
     grenadeHandler.draw();
+    smokeHandler.draw();
     // wallHandler.draw();
 }
 
