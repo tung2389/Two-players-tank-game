@@ -1,6 +1,6 @@
 class Smoke extends Bomb {
-    constructor(tank, radius, speed, flyingDistance, explodingRadius, emittingSpeed, explodingTime, sketch) {
-        super(tank, radius, speed, flyingDistance, explodingRadius, explodingTime, sketch);
+    constructor(tank, radius, speed, flyingDistance, explodingRadius, emittingSpeed, explodingTime) {
+        super(tank, radius, speed, flyingDistance, explodingRadius, explodingTime);
         this.emittingSpeed = emittingSpeed;
         this.coveringRadius = 0;
     };
@@ -8,10 +8,10 @@ class Smoke extends Bomb {
         this.coveringRadius += this.emittingSpeed;
     }
     explode() {
-        this.sketch.push();
-        this.sketch.fill('yellow');
-        this.sketch.circle(this.pos.x, this.pos.y, this.coveringRadius * 2);
-        this.sketch.pop();
+        sketch1.push();
+        sketch1.fill('yellow');
+        sketch1.circle(this.pos.x, this.pos.y, this.coveringRadius * 2);
+        sketch1.pop();
     }
     reachMaximumRadius() {
         if(this.coveringRadius >= this.explodingRadius) {
@@ -24,10 +24,10 @@ class Smoke extends Bomb {
     draw() {
         if(!this.explodeNow()) {
             this.handleMovement();
-            this.sketch.push();
-            this.sketch.fill('green');
-            this.sketch.circle(this.pos.x, this.pos.y, this.radius);
-            this.sketch.pop();
+            sketch1.push();
+            sketch1.fill('green');
+            sketch1.circle(this.pos.x, this.pos.y, this.radius);
+            sketch1.pop();
         }
         else {
             this.explode();

@@ -1,19 +1,21 @@
-class BulletHandler {
-    constructor(sketch) {
-        this.sketch = sketch;
+class BulletHandler extends ReloadingHandler {
+    constructor(amountPerTime, reloadingTime) {
+        super(amountPerTime, reloadingTime);
         this.player = player;
         this.opponent = opponent;
         this.bulletList = [];
     }
 
     createBullet(tank) {
-        this.bulletList.push(new Bullet(
-            tank,
-            10, // Speed
-            4,  // Radius
-            tank.color,
-            this.sketch
-        ));
+        if(this.amount > 0) {
+            this.bulletList.push(new Bullet(
+                tank,
+                10, // Speed
+                4,  // Radius
+                tank.color
+            ));
+            this.decreaseAmount();
+        }
     }
 
     removeBullet(pos) {
@@ -34,7 +36,7 @@ class BulletHandler {
     }
 
     distanceFromBulletToTank(bullet, tank) {
-        return this.sketch.dist(bullet.pos.x, bullet.pos.y, tank.pos.x, tank.pos.y) 
+        return sketch1.dist(bullet.pos.x, bullet.pos.y, tank.pos.x, tank.pos.y) 
             - tank.radius 
             - STROKE_WEIGHT 
             - bullet.radius;
@@ -91,5 +93,6 @@ class BulletHandler {
             let bullet = this.bulletList[i];
             bullet.draw();
         }
+        // this.drawReloading();
     }
 }

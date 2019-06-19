@@ -1,6 +1,8 @@
-var player, opponent, canvas, globalHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler, canvas2;
+var player, opponent, canvas, canvas2, globalHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler, reloadingHandler;
+var sketch1, sketch2;
 
 const main_canvas = ( sketch ) => {
+    sketch1 = sketch;
     sketch.setup = () => {
         setupSocketListeningForAction();
         createAllObjects(playersData);
@@ -9,7 +11,7 @@ const main_canvas = ( sketch ) => {
     sketch.draw = () => {
         drawAllObjects();
     }
-    
+
     function createAllObjects(data) {
         createTheCanvas();
         createTwoTanks(data);
@@ -42,8 +44,7 @@ const main_canvas = ( sketch ) => {
             propertyOfPlayer.color, // Color of the tank,
             typeOfPlayer, // The type of the player, for example: player 1 has type 0, player 2 has type 1
             6, // The health of the player
-            playersData.player_id, // The id of the player
-            sketch
+            playersData.player_id // The id of the player
         );
         
         opponent = new Tank(
@@ -58,8 +59,7 @@ const main_canvas = ( sketch ) => {
             propertyOfOpponent.color,
             1 - typeOfPlayer,
             6,
-            playersData.opponent_id,
-            sketch
+            playersData.opponent_id
         );
     }
     
@@ -86,10 +86,19 @@ const main_canvas = ( sketch ) => {
     }
     
     function createHandlers() {
-        bulletHandler = new BulletHandler(sketch);
-        globalHandler = new GlobalHandler(sketch);
-        grenadeHandler = new GrenadeHandler(sketch);
-        smokeHandler = new SmokeHandler(sketch);
+        bulletHandler = new BulletHandler(
+            30,
+            5
+        );
+        grenadeHandler = new GrenadeHandler(
+            1,
+            5
+        );
+        smokeHandler = new SmokeHandler(
+            1,
+            5
+        );
+        globalHandler = new GlobalHandler();
     }
     
     function createWalls() {
@@ -141,11 +150,16 @@ const main_canvas = ( sketch ) => {
 let m1 = new p5(main_canvas);
 
 const info_canvas = (sketch) => {
+    sketch2 = sketch;
     sketch.setup = () => {
-        canvas2 = new Canvas(80, 635);
-        canvas.position(1240, 0);
+        canvas2 = sketch.createCanvas(100, 635);
+        canvas2.position(1240, 0);
     }
     sketch.draw = () => {
-        
+        bulletHandler.drawReloading(60, 60);
+        grenadeHandler.drawReloading(60, 140);
+        smokeHandler.drawReloading(60, 220);
     }
 }
+
+let m2 = new p5(info_canvas);

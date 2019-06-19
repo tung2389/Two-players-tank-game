@@ -1,15 +1,10 @@
 const STROKE_WEIGHT = 4;
 const GUN_LENGTH = 20;
-const GRENADE_PER_TIME = 1;
-const SMOKE_PER_TIME = 1;
-const RELOAD_TIME = 5;
-let NEED_RELOADING = false;
-let RELOADING_TIME = 5;
 
 class Tank  {
-    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health, id, sketch) {
-        this.pos = sketch.createVector(x, y);
-        this.currentSpeed = sketch.createVector(0, 0);
+    constructor(x, y, angle, radius, maxSpeed, acceleratingSpeed, deceleratingSpeed, turnSpeed, color, type, health, id) {
+        this.pos = sketch1.createVector(x, y);
+        this.currentSpeed = sketch1.createVector(0, 0);
         this.radius = radius;
         this.angle = angle;
         this.maxSpeed = maxSpeed;
@@ -20,7 +15,6 @@ class Tank  {
         this.type = type;
         this.health = health;
         this.id = id;
-        this.sketch = sketch;
     }
 
     turn(direction) {
@@ -30,7 +24,7 @@ class Tank  {
     accelerate(direction) {
         // Create a vector of direction with the length equals to 1 from angle, +PI because the gap between the initial 
         // angle and the 0 angle is PI.
-        let currentAngle = p5.Vector.fromAngle(this.angle + this.sketch.PI);
+        let currentAngle = p5.Vector.fromAngle(this.angle + sketch1.PI);
         let accelerateX = currentAngle.x * this.acceleratingSpeed;
         let accelerateY = currentAngle.y * this.acceleratingSpeed;
         this.currentSpeed.x += direction === 'FORWARD' ? accelerateX : -accelerateX;
@@ -55,7 +49,7 @@ class Tank  {
     }
 
     createDirectionOfCurrentMovement () {
-        return this.sketch.createVector(this.currentSpeed.x, this.currentSpeed.y).normalize();
+        return sketch1.createVector(this.currentSpeed.x, this.currentSpeed.y).normalize();
     }
 
     handleDeceleratingSpeedXY (currentAngle) {
@@ -98,7 +92,7 @@ class Tank  {
     }
     
     collideWithOpponentTank(x,y) {
-        if(this.sketch.dist(x, y, opponent.pos.x, opponent.pos.y) - 2 * STROKE_WEIGHT - this.radius - opponent.radius < 0) {
+        if(sketch1.dist(x, y, opponent.pos.x, opponent.pos.y) - 2 * STROKE_WEIGHT - this.radius - opponent.radius < 0) {
             return true;
         }
         else {
@@ -145,22 +139,22 @@ class Tank  {
     }
 
     drawCircle() {
-        this.sketch.circle(0, 0, this.radius * 2);
+        sketch1.circle(0, 0, this.radius * 2);
     }
 
     drawGun() {
-        this.sketch.line(0, 0, -GUN_LENGTH, 0);
+        sketch1.line(0, 0, -GUN_LENGTH, 0);
     }
 
     drawColor() {
-        this.sketch.strokeWeight(STROKE_WEIGHT);
-        this.sketch.stroke(this.color);
-        this.sketch.fill("white");
+        sketch1.strokeWeight(STROKE_WEIGHT);
+        sketch1.stroke(this.color);
+        sketch1.fill("white");
     }
 
     drawTank() {
-        this.sketch.translate(this.pos.x, this.pos.y);
-        this.sketch.rotate(this.angle); // Rotate around origin (pos.x, pos.y). This is the reason why we must call translate first
+        sketch1.translate(this.pos.x, this.pos.y);
+        sketch1.rotate(this.angle); // Rotate around origin (pos.x, pos.y). This is the reason why we must call translate first
         this.drawColor();
         this.drawCircle();
         this.drawGun();
@@ -169,14 +163,14 @@ class Tank  {
     drawReloading() {
         let posX = 1280;
         let posY = 40;
-        this.sketch.push();
-        this.sketch.circle(posX, posY, 40);
-        this.sketch.pop();
+        sketch1.push();
+        sketch1.circle(posX, posY, 40);
+        sketch1.pop();
     }
     draw() {
         this.handleMovement();
-        this.sketch.push();
+        sketch1.push();
         this.drawTank();
-        this.sketch.pop();
+        sketch1.pop();
     }
 }
