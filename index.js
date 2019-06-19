@@ -11,11 +11,17 @@ const handleExiting = require('./controller/HandleExiting');
 
 const gamePage = require('./routes/tank.io');
 
+//Necessary for heroku
+process.env.PWD = process.cwd();
+
 let queue = [];
 let rooms = [];
 let names = [];
 
-app.use('/',express.static(__dirname + '/client'));
+//Necessary for heroku
+app.use('/',express.static(process.env.PWD, 'client'));
+
+//app.use('/',express.static(__dirname + '/client'));
 
 app.use('/', gamePage);
 
