@@ -92,11 +92,11 @@ const main_canvas = ( sketch ) => {
         );
         grenadeHandler = new GrenadeHandler(
             1,
-            5
+            10
         );
         smokeHandler = new SmokeHandler(
             1,
-            5
+            10
         );
         globalHandler = new GlobalHandler();
     }
@@ -120,10 +120,6 @@ const main_canvas = ( sketch ) => {
         opponent.draw();
     }
     
-    function drawInfo() {
-        player.drawReloading();
-    }
-    
     function runAllHandlers() {
         bulletHandler.draw();
         globalHandler.draw();
@@ -137,7 +133,6 @@ const main_canvas = ( sketch ) => {
             sketch.push();
             drawBackground();
             drawTwoPlayers();
-            drawInfo();
             runAllHandlers();
             sketch.pop();
         }
@@ -153,12 +148,13 @@ const info_canvas = (sketch) => {
     sketch2 = sketch;
     sketch.setup = () => {
         canvas2 = sketch.createCanvas(100, 635);
-        canvas2.position(1240, 0);
+        canvas2.position(1242, 0);
     }
     sketch.draw = () => {
-        bulletHandler.drawReloading(60, 60);
-        grenadeHandler.drawReloading(60, 140);
-        smokeHandler.drawReloading(60, 220);
+        sketch.clear();
+        bulletHandler.drawReloading(60, 80, 'Bullets');
+        grenadeHandler.drawReloading(60, 200, 'Grenade');
+        smokeHandler.drawReloading(60, 320, 'Smoke');
     }
 }
 

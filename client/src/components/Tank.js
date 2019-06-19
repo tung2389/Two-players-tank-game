@@ -159,14 +159,6 @@ class Tank  {
         this.drawCircle();
         this.drawGun();
     }
-
-    drawReloading() {
-        let posX = 1280;
-        let posY = 40;
-        sketch1.push();
-        sketch1.circle(posX, posY, 40);
-        sketch1.pop();
-    }
     draw() {
         this.handleMovement();
         sketch1.push();
