@@ -5,9 +5,9 @@ const server = app.listen(process.env.PORT || 3001,function(){
 });
 const io = require('socket.io')(server);
 
-const handleMatching = require('./controller/handleMatching');
-const handleControlling = require('./controller/handleControlling');
-const handleExiting = require('./controller/handleExiting');
+const handleMatching = require('./controller/HandleMatching');
+const handleControlling = require('./controller/HandleControlling');
+const handleExiting = require('./controller/HandleExiting');
 
 const gamePage = require('./routes/tank.io');
 
