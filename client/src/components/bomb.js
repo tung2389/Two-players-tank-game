@@ -34,7 +34,7 @@ class Bomb {
             this.pos.x - this.radius < 0 ||
             this.pos.y - this.radius < 0 ||
             this.pos.x + this.radius > canvas.width ||
-            this.pos.y + this.radius > canvas.heigth  
+            this.pos.y + this.radius > canvas.height
         ) {
             return true;
         }

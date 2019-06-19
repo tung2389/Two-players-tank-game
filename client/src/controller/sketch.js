@@ -19,9 +19,9 @@ function createAllObjects(data) {
 function createTheCanvas() {
     canvas = new Canvas(
         1340, // Width
-        600   // Height
+        640   // Height
     );
-    createCanvas(canvas.width, canvas.height + 40);
+    createCanvas(canvas.width, canvas.height);
 }
 
 function createTwoTanks(data) {
