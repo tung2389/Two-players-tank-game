@@ -1,22 +1,23 @@
 class Bomb {
-    constructor(tank, radius, speed, flyingDistance, explodingRadius, explodingTime) {
+    constructor(tank, radius, speed, flyingDistance, explodingRadius, explodingTime, sketch) {
         this.tank = tank;
         this.radius = radius;
         this.speed = speed;
         this.flyingDistance = flyingDistance;
         this.explodingRadius = explodingRadius;
-        this.direction = p5.Vector.fromAngle(tank.angle + PI);
-        this.originalPos = returnPosByDirection(tank, this.direction); 
-        this.pos = returnPosByDirection(tank, this.direction); 
+        this.direction = p5.Vector.fromAngle(tank.angle + sketch.PI);
+        this.originalPos = returnPosByDirection(tank, this.direction, sketch); 
+        this.pos = returnPosByDirection(tank, this.direction, sketch); 
         this.explodingTime = explodingTime * FPS;
         this.doneExploding = false;
+        this.sketch = sketch;
     }
     handleMovement() {
         this.pos.x += this.direction.x * this.speed;
         this.pos.y += this.direction.y * this.speed;
     }
     collideWithTank(tank) {
-        if(dist(this.pos.x, this.pos.y, tank.pos.x, tank.pos.y)
+        if(this.sketch.dist(this.pos.x, this.pos.y, tank.pos.x, tank.pos.y)
            - this.radius
            - tank.radius
            - STROKE_WEIGHT 
@@ -43,7 +44,7 @@ class Bomb {
         }
     }
     cannotFlyAnymore() {
-        if(dist(this.pos.x, this.pos.y, this.originalPos.x, this.originalPos.y) >= this.flyingDistance) {
+        if(this.sketch.dist(this.pos.x, this.pos.y, this.originalPos.x, this.originalPos.y) >= this.flyingDistance) {
             return true;
         }
         else {

@@ -1,5 +1,6 @@
 class GrenadeHandler {
-    constructor() {
+    constructor(sketch) {
+        this.sketch = sketch;
         this.grenadeList = [];
     }
     createGrenade(tank) {
@@ -11,14 +12,15 @@ class GrenadeHandler {
             100,       // Exploding radius
             3,         // Exploding damage
             6,         // Number of mini bombs
-            1          // Exploding time
+            1,          // Exploding time
+            this.sketch
         ))
     }
     removeGrenade(pos) {
         this.grenadeList.splice(pos, 1);
     }
     tankInsideExplodingRange(grenade, tank) {
-        if(dist(grenade.pos.x, grenade.pos.y, tank.pos.x, tank.pos.y) 
+        if(this.sketch.dist(grenade.pos.x, grenade.pos.y, tank.pos.x, tank.pos.y) 
             - grenade.explodingRadius 
             - tank.radius
             - STROKE_WEIGHT < 0
@@ -44,7 +46,6 @@ class GrenadeHandler {
                     i++;
                 }
                 else {
-                    console.log(2);
                     this.removeGrenade(i);
                 }
             }

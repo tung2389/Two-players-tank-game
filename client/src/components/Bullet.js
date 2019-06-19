@@ -1,17 +1,18 @@
 
-function returnPosByDirection(tank, direction) {
-    let pos = createVector(tank.pos.x + direction.x * tank.radius, tank.pos.y + direction.y * tank.radius);
+function returnPosByDirection(tank, direction, sketch) {
+    let pos = sketch.createVector(tank.pos.x + direction.x * tank.radius, tank.pos.y + direction.y * tank.radius);
     return pos;
 }
 
 class Bullet {
-    constructor(tank, speed, radius, color) {
+    constructor(tank, speed, radius, color, sketch) {
         this.tank = tank;
         this.speed = speed;
-        this.direction = p5.Vector.fromAngle(tank.angle + PI);
-        this.pos = returnPosByDirection(tank, this.direction);   
+        this.direction = p5.Vector.fromAngle(tank.angle + sketch.PI);
+        this.pos = returnPosByDirection(tank, this.direction, sketch);   
         this.radius = radius;
         this.color = color;
+        this.sketch = sketch;
     }
 
     getPrevPos() {
@@ -28,9 +29,9 @@ class Bullet {
 
     draw() {
         this.handleMovement();
-        push();
-        fill(this.color);
-        circle(this.pos.x, this.pos.y, this.radius);
-        pop();
+        this.sketch.push();
+        this.sketch.fill(this.color);
+        this.sketch.circle(this.pos.x, this.pos.y, this.radius);
+        this.sketch.pop();
     }
 }

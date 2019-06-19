@@ -1,5 +1,6 @@
 class SmokeHandler {
-    constructor() {
+    constructor(sketch) {
+        this.sketch = sketch;
         this.smokeList = [];
     }
     createSmoke(tank) {
@@ -10,7 +11,8 @@ class SmokeHandler {
             400,       // Flying distance
             200,       // Exploding radius
             0.5,       // Emitting speed  
-            2          // Exploding time
+            2,          // Exploding time
+            this.sketch
         ));
     }
     removeSmoke(pos) {

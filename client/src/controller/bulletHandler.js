@@ -1,5 +1,6 @@
 class BulletHandler {
-    constructor() {
+    constructor(sketch) {
+        this.sketch = sketch;
         this.player = player;
         this.opponent = opponent;
         this.bulletList = [];
@@ -10,7 +11,8 @@ class BulletHandler {
             tank,
             10, // Speed
             4,  // Radius
-            tank.color
+            tank.color,
+            this.sketch
         ));
     }
 
@@ -32,7 +34,7 @@ class BulletHandler {
     }
 
     distanceFromBulletToTank(bullet, tank) {
-        return dist(bullet.pos.x, bullet.pos.y, tank.pos.x, tank.pos.y) 
+        return this.sketch.dist(bullet.pos.x, bullet.pos.y, tank.pos.x, tank.pos.y) 
             - tank.radius 
             - STROKE_WEIGHT 
             - bullet.radius;

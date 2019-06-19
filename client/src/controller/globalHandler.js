@@ -2,7 +2,8 @@ const ENTER_KEY = 13;
 const U_KEY = 85;
 const I_KEY = 73;
 class GlobalHandler {
-    constructor() {
+    constructor(sketch) {
+        this.sketch = sketch;
         this.fireButtonPressed = false;
         this.throwGrenadeButtonPressed = false;
         this.throwSmokeButtonPressed = false;
@@ -19,10 +20,10 @@ class GlobalHandler {
 
     hanldeKeyTurn() {
         let direction = undefined;
-        if(keyIsDown(LEFT_ARROW)) {
+        if(this.sketch.keyIsDown(this.sketch.LEFT_ARROW)) {
             direction = 'LEFT';
         }
-        if(keyIsDown(RIGHT_ARROW)) {
+        if(this.sketch.keyIsDown(this.sketch.RIGHT_ARROW)) {
             direction = 'RIGHT';
         }   
         if(direction !== undefined) {
@@ -32,7 +33,7 @@ class GlobalHandler {
     }
 
     handleKeyDecelerate() {
-        if(keyIsDown(UP_ARROW) || keyIsDown(DOWN_ARROW)) {
+        if(this.sketch.keyIsDown(this.sketch.UP_ARROW) || this.sketch.keyIsDown(this.sketch.DOWN_ARROW)) {
             this.playerDecelerate = false;
         }
         else if(this.playerDecelerate === false){
@@ -42,10 +43,10 @@ class GlobalHandler {
 
     handleKeyAccelerate() {
         let direction = undefined;
-        if(keyIsDown(UP_ARROW)) {
+        if(this.sketch.keyIsDown(this.sketch.UP_ARROW)) {
             direction = 'FORWARD';
         }
-        if(keyIsDown(DOWN_ARROW)) {
+        if(this.sketch.keyIsDown(this.sketch.DOWN_ARROW)) {
             direction = 'BACKWARD';
         }
         if(direction !== undefined) {
@@ -56,7 +57,7 @@ class GlobalHandler {
     }
 
     handleKeyFire() {
-        if(keyIsDown(ENTER_KEY)) {
+        if(this.sketch.keyIsDown(ENTER_KEY)) {
             if(!this.fireButtonPressed) {
                 bulletHandler.createBullet(player);
                 socketGlobalHandler.sendShootingAction();
@@ -68,7 +69,7 @@ class GlobalHandler {
         }
     }
     handleKeyThrowBomb() {
-        if(keyIsDown(U_KEY)) {
+        if(this.sketch.keyIsDown(U_KEY)) {
             if(!this.throwGrenadeButtonPressed) {
                 grenadeHandler.createGrenade(player);
                 socketGlobalHandler.sendThrowingGrenadeAction();
@@ -78,7 +79,7 @@ class GlobalHandler {
         else {
             this.throwGrenadeButtonPressed = false;
         }
-        if(keyIsDown(I_KEY)) {
+        if(this.sketch.keyIsDown(I_KEY)) {
             if(!this.throwSmokeButtonPressed) {
                 smokeHandler.createSmoke(player);
                 socketGlobalHandler.sendThrowingSmokeAction();
@@ -115,11 +116,11 @@ class GlobalHandler {
     }
 
     displayTheResult(result) {
-        push();
-        textSize(30);
-        fill('red');
-        text(result, canvas.width / 2 - 100, 100);
-        pop();
+        this.sketch.push();
+        this.sketch.textSize(30);
+        this.sketch.fill('red');
+        this.sketch.text(result, canvas.width / 2 - 100, 100);
+        this.sketch.pop();
     }
 
     handleFinalResult() {
