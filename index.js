@@ -6,23 +6,24 @@ const server = app.listen(process.env.PORT || 3001,function(){
 });
 const io = require('socket.io')(server);
 
+//Write filenames in uppercase in order to fit with heroku
 const handleMatching = require('./controller/HandleMatching');
 const handleControlling = require('./controller/HandleControlling');
 const handleExiting = require('./controller/HandleExiting');
 
 const gamePage = require('./routes/tank.io');
 
-//Necessary for heroku
-process.env.PWD = process.cwd();
+//heroku only
+//process.env.PWD = process.cwd();
 
 let queue = [];
 let rooms = [];
 let names = [];
 
-//Necessary for heroku
-app.use('/',express.static(path.join(process.env.PWD, 'client')));
+//heroku only
+//app.use('/',express.static(path.join(process.env.PWD, 'client')));
 
-//app.use('/',express.static(__dirname + '/client'));
+app.use('/',express.static(__dirname + '/client'));
 
 app.use('/', gamePage);
 
