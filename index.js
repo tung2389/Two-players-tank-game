@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const server = app.listen(process.env.PORT || 3001,function(){
     console.log("Connected");
 });
@@ -19,7 +20,7 @@ let rooms = [];
 let names = [];
 
 //Necessary for heroku
-app.use('/',express.static(process.env.PWD, 'client'));
+app.use('/',express.static(path.join(process.env.PWD, 'client')));
 
 //app.use('/',express.static(__dirname + '/client'));
 
