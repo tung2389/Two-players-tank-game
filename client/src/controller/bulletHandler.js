@@ -7,13 +7,13 @@ class BulletHandler extends ReloadingHandler {
     }
 
     createBullet(tank) {
-        if(this.amount > 0) {
-            this.bulletList.push(new Bullet(
-                tank,
-                10, // Speed
-                4,  // Radius
-                tank.color
-            ));
+        this.bulletList.push(new Bullet(
+            tank,
+            10, // Speed
+            4,  // Radius
+            tank.color
+        ));
+        if(tank.type === player.type) {
             this.decreaseAmount();
         }
     }

@@ -3,23 +3,26 @@ class SmokeHandler extends ReloadingHandler {
         super(amountPerTime, reloadingTime);
         this.smokeList = [];
     }
+
     createSmoke(tank) {
-        if(this.amount > 0) {
-            this.smokeList.push(new Smoke(
-                tank,      // The owner of the smoke
-                6,         // Radius
-                10,        // Speed
-                400,       // Flying distance
-                200,       // Exploding radius
-                0.5,       // Emitting speed  
-                2          // Exploding time
-            ));
+        this.smokeList.push(new Smoke(
+            tank,      // The owner of the smoke
+            6,         // Radius
+            10,        // Speed
+            400,       // Flying distance
+            200,       // Exploding radius
+            0.5,       // Emitting speed  
+            2          // Exploding time
+        ));
+        if(tank.type === player.type) {
             this.decreaseAmount();
         }
     }
+
     removeSmoke(pos) {
         this.smokeList.splice(pos, 1);
     }
+
     handleExistenceOfSmokes() {
         let i = 0;
         while(i < this.smokeList.length) {
@@ -32,6 +35,7 @@ class SmokeHandler extends ReloadingHandler {
             }
         }
     }
+
     draw() {
         this.handleExistenceOfSmokes();
         for(let i = 0; i < this.smokeList.length; i++) {

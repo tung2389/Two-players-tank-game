@@ -41,7 +41,6 @@ class SocetGlobalHandler {
     }
 
     setupListeningAndHandling() {
-        socket.on('Please wait', () => pageController.changeDomContentTo('/public/pages/waitingPage.html'));
         socket.on('Starting battle', (data) => {
             pageController.changeDomContentTo('/public/index.html');
             playersData = data.playersInfo;
@@ -53,6 +52,7 @@ class SocetGlobalHandler {
         let playerName = pageController.getUserName();
         if(pageController.isPlayerNameValid(playerName)) {
             socket.emit('Find player',{name:playerName});
+            pageController.changeDomContentTo('/public/pages/waitingPage.html');
         }
         else {
             alert('Username cannot be empty');

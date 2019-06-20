@@ -58,8 +58,10 @@ class GlobalHandler {
     handleKeyFire() {
         if(sketch1.keyIsDown(ENTER_KEY)) {
             if(!this.fireButtonPressed) {
-                bulletHandler.createBullet(player);
-                socketGlobalHandler.sendShootingAction();
+                if(bulletHandler.amount > 0) {
+                    bulletHandler.createBullet(player);
+                    socketGlobalHandler.sendShootingAction();
+                }
             }
             this.fireButtonPressed = true;
         }
@@ -67,21 +69,30 @@ class GlobalHandler {
             this.fireButtonPressed = false;
         }
     }
-    handleKeyThrowBomb() {
+
+    handleKeyThrowGrenade() {
         if(sketch1.keyIsDown(U_KEY)) {
             if(!this.throwGrenadeButtonPressed) {
-                grenadeHandler.createGrenade(player);
-                socketGlobalHandler.sendThrowingGrenadeAction();
+                if(grenadeHandler.amount > 0)
+                {
+                    grenadeHandler.createGrenade(player);
+                    socketGlobalHandler.sendThrowingGrenadeAction();
+                }
             }
             this.throwGrenadeButtonPressed = true;
         }
         else {
             this.throwGrenadeButtonPressed = false;
         }
+    }
+
+    handleKeyThrowSmoke() {
         if(sketch1.keyIsDown(I_KEY)) {
             if(!this.throwSmokeButtonPressed) {
-                smokeHandler.createSmoke(player);
-                socketGlobalHandler.sendThrowingSmokeAction();
+                if(smokeHandler.amount > 0) {
+                    smokeHandler.createSmoke(player);
+                    socketGlobalHandler.sendThrowingSmokeAction();
+                }
             }
             this.throwSmokeButtonPressed = true;
         }
@@ -89,12 +100,14 @@ class GlobalHandler {
             this.throwSmokeButtonPressed = false;
         }
     }
+
     handleKeyPress() {
         this.hanldeKeyTurn();
         this.handleKeyDecelerate();
         this.handleKeyAccelerate();
         this.handleKeyFire();
-        this.handleKeyThrowBomb();
+        this.handleKeyThrowGrenade();
+        this.handleKeyThrowSmoke();
     }
 
     handleDeceleration() {
@@ -130,6 +143,7 @@ class GlobalHandler {
             this.displayTheResult('YOU LOSE');
         }
     }
+
     draw() {
         this.handleDeceleration();
         this.handleKeyPress();

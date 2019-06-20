@@ -3,24 +3,27 @@ class GrenadeHandler extends ReloadingHandler {
         super(amountPerTime, reloadingTime);
         this.grenadeList = [];
     }
+
     createGrenade(tank) {
-        if(this.amount > 0) {
-            this.grenadeList.push(new Grenade(
-                tank,      // The owner of the grenade
-                6,         // Radius
-                10,        // Speed
-                400,       // Flying distance
-                100,       // Exploding radius
-                3,         // Exploding damage
-                6,         // Number of mini bombs
-                1          // Exploding time
-            ));
+        this.grenadeList.push(new Grenade(
+            tank,      // The owner of the grenade
+            6,         // Radius
+            10,        // Speed
+            400,       // Flying distance
+            100,       // Exploding radius
+            3,         // Exploding damage
+            6,         // Number of mini bombs
+            1          // Exploding time
+        ));
+        if(tank.type === player.type) {
             this.decreaseAmount();
         }
     }
+
     removeGrenade(pos) {
         this.grenadeList.splice(pos, 1);
     }
+
     tankInsideExplodingRange(grenade, tank) {
         if(sketch1.dist(grenade.pos.x, grenade.pos.y, tank.pos.x, tank.pos.y) 
             - grenade.explodingRadius 
@@ -33,6 +36,7 @@ class GrenadeHandler extends ReloadingHandler {
             return false;
         }
     }
+
     handleTankDamagedByExplosion(tank) {
         let i = 0;
         while(i < this.grenadeList.length) {
@@ -56,6 +60,7 @@ class GrenadeHandler extends ReloadingHandler {
             }
         }
     }
+
     draw() {
         this.handleTankDamagedByExplosion(player);
         this.handleTankDamagedByExplosion(opponent);

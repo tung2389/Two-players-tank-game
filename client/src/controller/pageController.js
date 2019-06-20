@@ -1,9 +1,11 @@
 var pageController;
+var playerName;
 
 class PageController {
     constructor() {
 
     }
+
     async changeDomContentTo(url) {
         let htmlContent = await this.getHTMLContent(url);
         this.rewriteHTMLFile(htmlContent);
@@ -33,7 +35,8 @@ class PageController {
     }
     
     getUserName() {
-        return document.getElementById('name').value;
+        playerName = document.getElementById('name').value
+        return playerName;
     }
 }
 

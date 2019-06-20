@@ -155,6 +155,8 @@ const info_canvas = (sketch) => {
         bulletHandler.drawReloading(60, 80, 'Bullets');
         grenadeHandler.drawReloading(60, 200, 'Grenade');
         smokeHandler.drawReloading(60, 320, 'Smoke');
+        bulletHandler.drawHealth();
+        bulletHandler.drawPlayersInfo();
     }
 }
 
