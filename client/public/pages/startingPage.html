@@ -16,7 +16,7 @@
         <h4>This game requires two seperated computers for two players to play. For testing purpose, you can open two or more chrome windows to see them at the same time and play with yourself</h4>
         <h4>Enjoy!</h4>
         <input placeholder="Enter your name" type="text" id = "name">
-        <button onclick="socketGlobalHandler.findPlayer()">Find player</button>
+        <button onclick="socketGlobalHandler.findPlayer()" id = "findPlayer">Find player</button>
     </div>
     <script>
         socketGlobalHandler.setupListeningAndHandling();

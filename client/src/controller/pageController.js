@@ -38,6 +38,12 @@ class PageController {
         playerName = document.getElementById('name').value
         return playerName;
     }
+
+    modifyFindPlayerButton() {
+        let button = document.getElementById("findPlayer")
+        button.disabled = true
+        button.innerHTML = "Please wait"
+    }
 }
 
 pageController = new PageController();
