@@ -112,9 +112,11 @@ class GlobalHandler {
 
     handleDeceleration() {
         if(this.playerDecelerate === true) {
-            player.decelerate();
-            let pos = this.getPlayerPos();
-            socketGlobalHandler.sendMovingAction(pos);
+            let canDecelerate = player.decelerate();
+            if(canDecelerate === true) {
+                let pos = this.getPlayerPos();
+                socketGlobalHandler.sendMovingAction(pos);
+            }
         }
     }
     

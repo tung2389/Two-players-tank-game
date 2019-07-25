@@ -45,6 +45,10 @@ class Tank  {
         if( this.currentSpeed.x !== 0 || this.currentSpeed.y !== 0) {
             let currentAngleMovement = this.createDirectionOfCurrentMovement();
             this.handleDeceleratingSpeedXY(currentAngleMovement);
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
