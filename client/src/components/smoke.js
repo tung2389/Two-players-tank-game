@@ -3,11 +3,16 @@ class Smoke extends Bomb {
         super(tank, radius, speed, flyingDistance, explodingRadius, explodingTime);
         this.emittingSpeed = emittingSpeed;
         this.coveringRadius = 0;
+        grenadeSound.play()
     };
     extendCoveringRadius() {
         this.coveringRadius += this.emittingSpeed;
     }
     explode() {
+        if(this.playedSound === false) {
+            smokeSound.play();
+            this.playedSound = true;
+        }
         sketch1.push();
         sketch1.fill('yellow');
         sketch1.circle(this.pos.x, this.pos.y, this.coveringRadius * 2);

@@ -1,15 +1,25 @@
-var player, opponent, canvas, canvas2, globalHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler, reloadingHandler;
+var player, opponent, canvas, canvas2, globalHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler, reloadingHandler, drawOtherInfo;
 var sketch1, sketch2;
+var grenadeSound, explosionSound, gunSound, smokeSound;
+const FPS = 60;
 
 const main_canvas = ( sketch ) => {
     sketch1 = sketch;
     sketch.setup = () => {
         setupSocketListeningForAction();
         createAllObjects(playersData);
+        prepareSound();
     }
     
     sketch.draw = () => {
         drawAllObjects();
+    }
+
+    function prepareSound() {
+        gunSound = sketch.loadSound("src/sound/gun.mp3");
+        grenadeSound = sketch.loadSound("src/sound/grenade.mp3");
+        explosionSound = sketch.loadSound("src/sound/explosion.mp3");
+        smokeSound = sketch.loadSound("src/sound/smoke.mp3")
     }
 
     function createAllObjects(data) {
@@ -98,6 +108,7 @@ const main_canvas = ( sketch ) => {
             1,
             10
         );
+        drawOtherInfo = new DrawOtherInfo();
         globalHandler = new GlobalHandler();
     }
     
@@ -155,8 +166,8 @@ const info_canvas = (sketch) => {
         bulletHandler.drawReloading(60, 80, 'Bullets');
         grenadeHandler.drawReloading(60, 200, 'Grenade');
         smokeHandler.drawReloading(60, 320, 'Smoke');
-        bulletHandler.drawHealth();
-        bulletHandler.drawPlayersInfo();
+        drawOtherInfo.drawHealth();
+        drawOtherInfo.drawPlayersInfo();
     }
 }
 

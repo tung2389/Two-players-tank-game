@@ -10,6 +10,7 @@ class Bomb {
         this.pos = returnPosByDirection(tank, this.direction); 
         this.explodingTime = explodingTime * FPS;
         this.doneExploding = false;
+        this.playedSound = false;
     }
     handleMovement() {
         this.pos.x += this.direction.x * this.speed;

@@ -12,6 +12,7 @@ class Bullet {
         this.pos = returnPosByDirection(tank, this.direction);   
         this.radius = radius;
         this.color = color;
+        gunSound.play();
     }
 
     getPrevPos() {
