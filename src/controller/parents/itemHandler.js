@@ -1,0 +1,2 @@
+- This remove item, decrease amount
+- You should create an offline game now. Think about it, how can you handle random item online ? Do in offline first
