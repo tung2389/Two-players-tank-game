@@ -12,7 +12,7 @@ class Bullet {
         this.radius = radius;
         this.color = color;
         this.id = id;
-        // gunSound.play();
+        gunSound.play();
     }
 
     getPrevPos() {

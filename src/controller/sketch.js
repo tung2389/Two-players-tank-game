@@ -37,10 +37,10 @@ const main_canvas = ( sketch ) => {
     }
 
     function prepareSound() {
-        // gunSound = sketch.loadSound("src/sound/gun.mp3");
-        // grenadeSound = sketch.loadSound("src/sound/grenade.mp3");
-        // explosionSound = sketch.loadSound("src/sound/explosion.mp3");
-        // smokeSound = sketch.loadSound("src/sound/smoke.mp3")
+        gunSound = sketch.loadSound("src/sound/gun.mp3");
+        grenadeSound = sketch.loadSound("src/sound/grenade.mp3");
+        explosionSound = sketch.loadSound("src/sound/explosion.mp3");
+        smokeSound = sketch.loadSound("src/sound/smoke.mp3")
     }
 
     function createAllObjects() {

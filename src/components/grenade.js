@@ -7,14 +7,14 @@ class Grenade extends Bomb{
         this.explodingDamage = explodingDamage;
         this.numberOfMiniBomb = numberOfMiniBomb;
         this.tankDamaged = [];
-        // grenadeSound.play();
+        grenadeSound.play();
     }
 
     explode() {
-        // if(this.playedSound === false) {
-        //     explosionSound.play();
-        //     this.playedSound = true;
-        // }
+        if(this.playedSound === false) {
+            explosionSound.play();
+            this.playedSound = true;
+        }
         sketch1.push();
         sketch1.fill('red');
         sketch1.circle(this.pos.x, this.pos.y, this.explodingRadius * 2);
