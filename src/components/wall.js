@@ -9,10 +9,10 @@ class Wall {
         this.color = color;
     }
     draw() {
-        push();
-        strokeWeight(this.thickness);
-        stroke(this.color)
-        line(this.x1,this.y1,this.x2,this.y2)
-        pop();
+        sketch1.push();
+        sketch1.strokeWeight(this.thickness);
+        sketch1.stroke(this.color)
+        sketch1.line(this.x1,this.y1,this.x2,this.y2)
+        sketch1.pop();
     }
 }

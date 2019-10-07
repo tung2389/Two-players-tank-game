@@ -1,12 +1,13 @@
-var tanks = [], canvas2, globalHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler, reloadingHandler, drawOtherInfo;
+var tanks = [], canvas2, keyHandler, bulletHandler, grenadeHandler, smokeHandler, wallHandler, reloadingHandler, drawOtherInfo, resultHandler;
 var sketch1, sketch2;
 var grenadeSound, explosionSound, gunSound, smokeSound;
 const FPS = 60;
 const numberOfTanks = 2;
+const TANK_RADIUS = 15, MAX_SPEED = 6, ACCELERATING_SPEED = 0.2, DECELERATING_SPEED = 0.2, TURNING_SPEED = Math.PI / 60, TANK_HEALTH = 6;
 
 var canvas = new Canvas(
-    1240, // Width
-    635   // Height
+    window.screen.width - 20, // Width   
+    window.innerHeight - 80  // Height
 );
 
 const tanksProperties = [
@@ -50,7 +51,6 @@ const main_canvas = ( sketch ) => {
     };
     
     function createTheCanvas() {
-        console.log(canvas);
         sketch.createCanvas(canvas.width, canvas.height);
     }
 
@@ -60,13 +60,13 @@ const main_canvas = ( sketch ) => {
                 tanksProperties[i].x,       // x-coordinate
                 tanksProperties[i].y,       // y-coordinate
                 tanksProperties[i].angle,   // Initial angle
-                15,                         // Radius
+                TANK_RADIUS,                // Radius
                 tanksProperties[i].color,   // Tank's color
-                6,                          // Maximum speed
-                0.2,                        // Accelerating speed
-                0.2,                        // Decelerating speed
-                sketch.PI / 60,             // Turning speed
-                6,                          // Player's health
+                MAX_SPEED,                  // Maximum speed
+                ACCELERATING_SPEED,         // Accelerating speed
+                DECELERATING_SPEED,         // Decelerating speed
+                TURNING_SPEED,              // Turning speed
+                TANK_HEALTH,                // Player's health
                 i                           // Player's id
             ))
         }
@@ -86,7 +86,8 @@ const main_canvas = ( sketch ) => {
             10
         );
         // drawOtherInfo = new DrawOtherInfo();
-        globalHandler = new GlobalHandler();
+        keyHandler = new KeyHandler();
+        resultHandler = new ResultHandler();
     }
     
     function drawBackground() {
@@ -103,24 +104,24 @@ const main_canvas = ( sketch ) => {
     }
     
     function runAllHandlers() {
+        let testWall = new Wall(canvas.width/4, 0 ,canvas.width/4, 90, 6, 'black');
+        testWall.draw();
         bulletHandler.draw();
-        globalHandler.draw();
+        keyHandler.draw();
         grenadeHandler.draw();
         smokeHandler.draw();
+        resultHandler.draw();
         // wallHandler.draw();
     }
     
     function drawAllObjects() {
-        // if(globalHandler.gameEnded() === false) {
+        if(resultHandler.gameEnded === false) {
             sketch.push();
             drawBackground();
             drawTanks();
             runAllHandlers();
             sketch.pop();
-        // }
-        // else {
-        //     globalHandler.handleFinalResult();
-        // }
+        }
     }
 }
 

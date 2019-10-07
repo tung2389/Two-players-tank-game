@@ -21,18 +21,12 @@ const KEY_CONTROL = [
     }
 ]
 
-class GlobalHandler {
+class KeyHandler {
     constructor() {
         this.fireButtonPressed = [];
         this.throwGrenadeButtonPressed = [];
         this.throwSmokeButtonPressed = [];
         this.tanksDecelerate = [];
-        // for(let i = 0; i < numberOfTanks; i++) {
-        //     this.fireButtonPressed[i] = false;
-        //     this.throwGrenadeButtonPressed[i] = false;
-        //     this.throwSmokeButtonPressed[i] = false;
-        //     this.tanksDecelerate[i] = false;
-        // }
     }
 
     hanldeKeyTurn(tank, keySet) {
@@ -134,33 +128,6 @@ class GlobalHandler {
             }
         }
     }   
-    
-    gameEnded() {
-        for( let i = 0; i < numberOfTanks; i++) {
-            let tank = tanks[i];
-            if(tank.health <= 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    displayTheResult(result) {
-        sketch1.push();
-        sketch1.textSize(30);
-        sketch1.fill('red');
-        sketch1.text(result, canvas.width / 2 - 100, 100);
-        sketch1.pop();
-    }
-
-    handleFinalResult() {
-        if(player.health > 0) {
-            this.displayTheResult('YOU WIN');
-        }
-        else {
-            this.displayTheResult('YOU LOSE');
-        }
-    }
 
     draw() {
         this.handleDeceleration();
