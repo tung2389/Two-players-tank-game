@@ -71,7 +71,8 @@ class KeyHandler {
                     // bulletHandler.createBullet(tank.id);
                     // let tripleBullet = new TripleBullet(tank.id)
                     // tripleBullet.draw()
-                    mineHandler.createMine(tank.id)
+                    // mineHandler.createMine(tank.id)
+                    laserHandler.createLaser(tank.id)
                 }
             }
             this.fireButtonPressed[tank.id] = true;

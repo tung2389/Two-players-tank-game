@@ -1,11 +1,13 @@
 var tanks = [], canvas2
-var keyHandler, bulletHandler, grenadeHandler, smokeHandler,mineHandler, wallHandler, 
+var keyHandler, bulletHandler, grenadeHandler, smokeHandler, mineHandler, laserHandler, wallHandler, 
     reloadingHandler, drawOtherInfo, resultHandler;
 var sketch1, sketch2;
 var grenadeSound, explosionSound, gunSound, smokeSound;
 const FPS = 60;
 const numberOfTanks = 2;
-const TANK_RADIUS = 15, MAX_SPEED = 6, ACCELERATING_SPEED = 0.2, DECELERATING_SPEED = 0.2, TURNING_SPEED = Math.PI / 60, TANK_HEALTH = 6;
+const TANK_RADIUS = 15, MAX_SPEED = 6, ACCELERATING_SPEED = 0.2, DECELERATING_SPEED = 0.2,
+      TURNING_SPEED = Math.PI / 60, TANK_HEALTH = 6;
+const utils = new Utils()
 
 var canvas = new Canvas(
     window.screen.width - 20, // Width   
@@ -88,6 +90,7 @@ const main_canvas = ( sketch ) => {
             10
         );
         mineHandler = new MineHandler();
+        laserHandler = new LaserHandler();
         // drawOtherInfo = new DrawOtherInfo();
         keyHandler = new KeyHandler();
         resultHandler = new ResultHandler();
@@ -114,6 +117,7 @@ const main_canvas = ( sketch ) => {
         grenadeHandler.draw();
         smokeHandler.draw();
         mineHandler.draw()
+        laserHandler.draw()
         resultHandler.draw();
         // wallHandler.draw();
     }

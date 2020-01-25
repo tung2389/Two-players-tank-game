@@ -32,7 +32,7 @@ class Smoke extends Bomb {
         if(!this.exploded) {
             this.handleMovement();
             sketch1.push();
-            sketch1.fill('green');
+            sketch1.fill('grey');
             sketch1.circle(this.pos.x, this.pos.y, this.radius * 2);
             sketch1.pop();
         }

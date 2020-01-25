@@ -5,8 +5,8 @@ class Bomb {
         this.flyingDistance = flyingDistance;
         this.explodingRadius = explodingRadius;
         this.direction = p5.Vector.fromAngle(tanks[id].angle);
-        this.originalPos = returnPosByDirection(tanks[id], this.direction); 
-        this.pos = returnPosByDirection(tanks[id], this.direction); 
+        this.originalPos = utils.returnPosByDirection(tanks[id], this.direction); 
+        this.pos = utils.returnPosByDirection(tanks[id], this.direction); 
         this.explodingTime = explodingTime * FPS;
         this.exploded = false;
         this.doneExploding = false;

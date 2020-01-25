@@ -1,14 +1,8 @@
-
-function returnPosByDirection(tank, direction) {
-    let pos = sketch1.createVector(tank.pos.x + direction.x * tank.radius, tank.pos.y + direction.y * tank.radius);
-    return pos;
-}
-
 class Bullet {
     constructor(speed, radius, color, id) {
         this.speed = speed;
         this.direction = p5.Vector.fromAngle(tanks[id].angle);
-        this.pos = returnPosByDirection(tanks[id], this.direction);   
+        this.pos = utils.returnPosByDirection(tanks[id], this.direction);   
         this.radius = radius;
         this.color = color;
         this.id = id;
